@@ -1,2 +1,9 @@
 # Lab-s-Data-Warehouse
-A Data Warehouse contains Amazon movies' information
+一个存储Amazon电影产品相关信息的数据仓库
+计划阶段：
+第一阶段：数据准备
+在数据准备阶段，我们将从Amazon爬取250k电影产品信息，经过一系列的处理和分类操作，形成原始数据
+
+第二阶段：数据逻辑模型
+
+第三阶段：数据物理存储模型
