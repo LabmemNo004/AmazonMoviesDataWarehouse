@@ -1,4 +1,4 @@
-# Labs DataWarehouse
+# AmazonMoviesDataWarehouse
 ## 项目进度
 
 1. 项目要求：
