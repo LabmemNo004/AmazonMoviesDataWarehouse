@@ -109,13 +109,13 @@
      >
      >- [x] 逻辑存储模型LDM
    
-      <img src="/Users/tanzhongyu/Lab-s-Data-Warehouse/期末项目/img/LDM.png" alt="LDM" style="zoom:30%;" />
+      <img src="/期末项目/img/LDM.png" alt="LDM" style="zoom:30%;" />
    
      >- [x] 物理存储模型PDM
    
    ​     关系型/分布式
    
-      <img src="/Users/tanzhongyu/Lab-s-Data-Warehouse/期末项目/img/PDM.png" alt="PDM" style="zoom:30%;" /> 
+      <img src="/期末项目/img/PDM.png" alt="PDM" style="zoom:30%;" /> 
    
      >- [ ] 分布式文件系统存储模型（schema定义文件）
      >
