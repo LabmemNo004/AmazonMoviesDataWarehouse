@@ -136,7 +136,7 @@
    
    3. 查询和统计程序
    
-      [Java 数据查询后端](https://github.com/LabmemNo004/AmazonMoviesDataWarehouse)
+      [Java 数据查询后端](https://github.com/LabmemNo004//MovieAnalyzationPlatform)
    
       
    
