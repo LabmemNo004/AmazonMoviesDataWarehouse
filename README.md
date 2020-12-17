@@ -109,7 +109,7 @@
      >
      >- [x] 逻辑存储模型LDM
    
-      <img src="/期末项目/img/LDM.png" alt="LDM" style="zoom:30%;" />
+      <img src="https://github.com/LabmemNo004/Lab-s-Data-Warehouse/raw/master/期末项目/img/LDM.png" alt="LDM" style="zoom:30%;" />
    
      >- [x] 物理存储模型PDM
    
