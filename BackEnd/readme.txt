@@ -1,0 +1,5 @@
+直接在BackEnd下创建自己的项目，第一个DataWarehouse是李一凡的mysql后端。
+
+所有人都fork一个自己仓库，每次提交到自己的远程仓库再向这个主仓库pull request.李一凡负责审核每次pull
+
+!!!注意创建create pull request以后显示可以自动合并也不要动，李一凡会每天检查更新，没问题会李一凡和谭忠煜帮你合并。
