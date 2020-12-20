@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.JSONAndConfig;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
