@@ -10,6 +10,4 @@ public interface personRepository extends JpaRepository<person, Integer>{
 
     List<person> findAll();
 
-
-
 }

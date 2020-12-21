@@ -13,22 +13,22 @@ public class person
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) //配置主键的生成策略
     @Column(name="personID") 
-    private int personID;
+    private Integer personID;
 
     @Column(name="name") 
     private String name;
 
     @Column(name="actorNum") 
-    private int actorNum;
+    private Integer actorNum;
 
     @Column(name="directorNum") 
-    private int directorNum;
+    private Integer directorNum;
 
     @Column(name="actorAndDirectorNum") 
-    private int actorAndDirectorNum;
+    private Integer actorAndDirectorNum;
 
     @Column(name="joinNum") 
-    private int joinNum;
+    private Integer joinNum;
 
     @Column(name="actorOrDirector") 
     private char actorOrDirector;
@@ -39,11 +39,11 @@ public class person
     @Column(name="directorAverageScore") 
     private float directorAverageScore;
 
-    public int getPersonID() {
+    public Integer getPersonID() {
         return personID;
     }
 
-    public void setPersonID(int personID) {
+    public void setPersonID(Integer personID) {
         this.personID = personID;
     }
 
@@ -55,35 +55,35 @@ public class person
         this.name = name;
     }
 
-    public int getActorNum() {
+    public Integer getActorNum() {
         return actorNum;
     }
 
-    public void setActorNum(int actorNum) {
+    public void setActorNum(Integer actorNum) {
         this.actorNum = actorNum;
     }
 
-    public int getDirectorNum() {
+    public Integer getDirectorNum() {
         return directorNum;
     }
 
-    public void setDirectorNum(int directorNum) {
+    public void setDirectorNum(Integer directorNum) {
         this.directorNum = directorNum;
     }
 
-    public int getActorAndDirectorNum() {
+    public Integer getActorAndDirectorNum() {
         return actorAndDirectorNum;
     }
 
-    public void setActorAndDirectorNum(int actorAndDirectorNum) {
+    public void setActorAndDirectorNum(Integer actorAndDirectorNum) {
         this.actorAndDirectorNum = actorAndDirectorNum;
     }
 
-    public int getJoinNum() {
+    public Integer getJoinNum() {
         return joinNum;
     }
 
-    public void setJoinNum(int joinNum) {
+    public void setJoinNum(Integer joinNum) {
         this.joinNum = joinNum;
     }
 

@@ -11,19 +11,19 @@ public class movie {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY) //配置主键的生成策略
     @Column(name="movieID")
-    private int movieID;
+    private Integer movieID;
 
     @Column(name="title")
     private String title;
 
     @Column(name="productNum")
-    private int productNum;
+    private Integer productNum;
 
     @Column(name="directorNum")
-    private int directorNum;
+    private Integer directorNum;
 
     @Column(name="actorNum")
-    private int actorNum;
+    private Integer actorNum;
 
     @Column(name="score")
     private float score;
@@ -31,11 +31,11 @@ public class movie {
     @Column(name="hasPositiveComment")
     private char hasPositiveComment;
 
-    public int getMovieID() {
+    public Integer getMovieID() {
         return movieID;
     }
 
-    public void setMovieID(int movieID) {
+    public void setMovieID(Integer movieID) {
         this.movieID = movieID;
     }
 
@@ -47,27 +47,27 @@ public class movie {
         this.title = title;
     }
 
-    public int getProductNum() {
+    public Integer getProductNum() {
         return productNum;
     }
 
-    public void setProductNum(int productNum) {
+    public void setProductNum(Integer productNum) {
         this.productNum = productNum;
     }
 
-    public int getDirectorNum() {
+    public Integer getDirectorNum() {
         return directorNum;
     }
 
-    public void setDirectorNum(int directorNum) {
+    public void setDirectorNum(Integer directorNum) {
         this.directorNum = directorNum;
     }
 
-    public int getActorNum() {
+    public Integer getActorNum() {
         return actorNum;
     }
 
-    public void setActorNum(int actorNum) {
+    public void setActorNum(Integer actorNum) {
         this.actorNum = actorNum;
     }
 
