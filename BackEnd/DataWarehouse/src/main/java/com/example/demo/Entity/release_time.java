@@ -14,57 +14,57 @@ import java.io.Serializable;
 public class release_time implements Serializable {
     @Id
     @Column(name = "timeID")
-    private int timeID;
+    private Integer timeID;
 
     @Column(name = "releaseYear")
-    private int releaseYear;
+    private Integer releaseYear;
 
     @Column(name = "releaseMonth")
-    private int releaseMonth;
+    private Integer releaseMonth;
 
     @Column(name = "releaseDay")
-    private int releaseDay;
+    private Integer releaseDay;
 
     @Column(name = "dailyReleaseNum")
-    private int dailyReleaseNum;
+    private Integer dailyReleaseNum;
 
-    public int getTimeID() {
+    public Integer getTimeID() {
         return timeID;
     }
 
-    public void setTimeID(int timeID) {
+    public void setTimeID(Integer timeID) {
         this.timeID = timeID;
     }
 
-    public int getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(int releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public int getReleaseMonth() {
+    public Integer getReleaseMonth() {
         return releaseMonth;
     }
 
-    public void setReleaseMonth(int releaseMonth) {
+    public void setReleaseMonth(Integer releaseMonth) {
         this.releaseMonth = releaseMonth;
     }
 
-    public int getReleaseDay() {
+    public Integer getReleaseDay() {
         return releaseDay;
     }
 
-    public void setReleaseDay(int releaseDay) {
+    public void setReleaseDay(Integer releaseDay) {
         this.releaseDay = releaseDay;
     }
 
-    public int getDailyReleaseNum() {
+    public Integer getDailyReleaseNum() {
         return dailyReleaseNum;
     }
 
-    public void setDailyReleaseNum(int dailyReleaseNum) {
+    public void setDailyReleaseNum(Integer dailyReleaseNum) {
         this.dailyReleaseNum = dailyReleaseNum;
     }
 }

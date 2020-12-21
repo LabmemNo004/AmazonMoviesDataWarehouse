@@ -14,10 +14,10 @@ public class product {
     private String productID;
 
     @Column(name="movieID")
-    private int movieID;
+    private Integer movieID;
 
     @Column(name="timeID")
-    private int timeID;
+    private Integer timeID;
 
     @Column(name="type")
     private String type;
@@ -36,19 +36,19 @@ public class product {
         this.productID = productID;
     }
 
-    public int getMovieID() {
+    public Integer getMovieID() {
         return movieID;
     }
 
-    public void setMovieID(int movieID) {
+    public void setMovieID(Integer movieID) {
         this.movieID = movieID;
     }
 
-    public int getTimeID() {
+    public Integer getTimeID() {
         return timeID;
     }
 
-    public void setTimeID(int timeID) {
+    public void setTimeID(Integer timeID) {
         this.timeID = timeID;
     }
 

@@ -14,7 +14,7 @@ public class type {
     private String type;
 
     @Column(name="movieNum")
-    private int movieNum;
+    private Integer movieNum;
 
     public String getType() {
         return type;
@@ -24,11 +24,11 @@ public class type {
         this.type = type;
     }
 
-    public int getMovieNum() {
+    public Integer getMovieNum() {
         return movieNum;
     }
 
-    public void setMovieNum(int movieNum) {
+    public void setMovieNum(Integer movieNum) {
         this.movieNum = movieNum;
     }
 }

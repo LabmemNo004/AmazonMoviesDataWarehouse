@@ -1,49 +1,50 @@
 package com.example.demo.Entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Proxy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Data
 @Table(name = "cooperation")
+@IdClass(cooperation.class)
+@Proxy(lazy = false)
+//取消懒加载避免奇怪bug
 public class cooperation implements Serializable {
     @Id
     @Column(name = "leftPersonID")
-    private int leftPersonID;
+    private Integer leftPersonID;
 
     @Id
     @Column(name = "rightPersonID")
-    private int rightPersonID;
+    private Integer rightPersonID;
 
     @Column(name = "cooperateNum")
-    private int cooperateNum;
+    private Integer cooperateNum;
 
-    public int getLeftPersonID() {
+    public Integer getLeftPersonID() {
         return leftPersonID;
     }
 
-    public void setLeftPersonID(int leftPersonID) {
+    public void setLeftPersonID(Integer leftPersonID) {
         this.leftPersonID = leftPersonID;
     }
 
-    public int getRightPersonID() {
+    public Integer getRightPersonID() {
         return rightPersonID;
     }
 
-    public void setRightPersonID(int rightPersonID) {
+    public void setRightPersonID(Integer rightPersonID) {
         this.rightPersonID = rightPersonID;
     }
 
-    public int getCooperateNum() {
+    public Integer getCooperateNum() {
         return cooperateNum;
     }
 
-    public void setCooperateNum(int cooperateNum) {
+    public void setCooperateNum(Integer cooperateNum) {
         this.cooperateNum = cooperateNum;
     }
 }

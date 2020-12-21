@@ -1,49 +1,61 @@
 package com.example.demo.Entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Proxy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Data
 @Table(name = "year_month_release")
+@IdClass(year_monthPK.class)
+@Proxy(lazy = false)
+//取消懒加载避免奇怪bug
 public class year_month_release implements Serializable {
     @Id
     @Column(name = "releaseYear")
-    private int releaseYear;
+    private Integer releaseYear;
 
     @Id
     @Column(name = "releaseMonth")
-    private int releaseMonth;
+    private Integer releaseMonth;
 
     @Column(name = "releaseNum")
-    private int releaseNum;
+    private Integer releaseNum;
 
-    public int getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(int releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public int getReleaseMonth() {
+    public Integer getReleaseMonth() {
         return releaseMonth;
     }
 
-    public void setReleaseMonth(int releaseMonth) {
+    public void setReleaseMonth(Integer releaseMonth) {
         this.releaseMonth = releaseMonth;
     }
 
-    public int getReleaseNum() {
+    public Integer getReleaseNum() {
         return releaseNum;
     }
 
-    public void setReleaseNum(int releaseNum) {
+    public void setReleaseNum(Integer releaseNum) {
         this.releaseNum = releaseNum;
     }
+    
+    //    public year_month_release() {
+//        super();
+//    }
+//
+//    public year_month_release(Integer releaseYear, Integer releaseMonth, Integer releaseNum) {
+//        super();
+//        this.releaseYear = releaseYear;
+//        this.releaseMonth = releaseMonth;
+//        this.releaseNum = releaseNum;
+//    }
 }

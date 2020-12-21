@@ -14,25 +14,25 @@ import java.io.Serializable;
 public class year_release implements Serializable {
     @Id
     @Column(name = "releaseYear")
-    private int releaseYear;
+    private Integer releaseYear;
 
 
     @Column(name = "releaseNum")
-    private int releaseNum;
+    private Integer releaseNum;
 
-    public int getReleaseYear() {
+    public Integer getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(int releaseYear) {
+    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
 
-    public int getReleaseNum() {
+    public Integer getReleaseNum() {
         return releaseNum;
     }
 
-    public void setReleaseNum(int releaseNum) {
+    public void setReleaseNum(Integer releaseNum) {
         this.releaseNum = releaseNum;
     }
 }
