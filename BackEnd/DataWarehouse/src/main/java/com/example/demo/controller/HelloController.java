@@ -21,7 +21,7 @@ public class HelloController {
         map.put("博客地址", "http://blog.itcodai.com");
         map.put("CSDN地址", null);
         map.put("粉丝数量", 4153);
-        return new JsonResult<>(map,"成功");
+        return new JsonResult<>(map,"成功",0);
     }
 
     @GetMapping("/hello")
@@ -109,7 +109,7 @@ public class HelloController {
 //
 //        提供的查询模版：（返回前n行（n<=N,N=100[暂定]）数据，和查询到的总数据行数）
 //
-//        查询电影《XXX》的电影产品，返回电影产品名称对应的 ASIN号、发布时间、格式、类型、Amazon网址，并按照发布时间先后排序。
+//        查询电影《XXX》的电影产品，返回电影产品对应的 ASIN号、发布时间、格式、类型、Amazon网址，并按照发布时间先后排序。
 //
 //        查询电影《XXX》的基本信息，返回产品数量、导演数量、演员数量、评论数量、评分，
 //

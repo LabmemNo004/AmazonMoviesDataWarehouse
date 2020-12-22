@@ -1,26 +1,25 @@
 package com.example.demo.service;
 
-import com.example.demo.Entity.movie;
-import com.example.demo.Entity.product;
-import com.example.demo.Entity.release_time;
-import com.example.demo.dao.movieRepository;
-import com.example.demo.dao.productRepository;
-import com.example.demo.dao.releaseTimeRepository;
-import com.example.demo.dao.yearMonthRepository;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.example.demo.Entity.*;
+import com.example.demo.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class movieService {
 
     @Autowired
-    private yearMonthRepository yearmonthRepository;
+    private yearMonthRepository yearmonthrepository;
 
     @Autowired
-    private releaseTimeRepository releaseTimeRepository;
+    private releaseTimeRepository releasetimerepository;
 
     @Autowired
     private movieRepository movierepository;
@@ -28,13 +27,19 @@ public class movieService {
     @Autowired
     private productRepository productrepository;
 
+    @Autowired
+    private yearReleaseRepository yearReleaseRepository;
+
+    /**
+     * 非sql查询，全部使用JPA 命名方法，未使用索引
+     * @param year
+     * @param month
+     * @param day
+     * @return
+     */
     public List<movie> findBySpecifidTime(Integer year,Integer month,Integer day)
     {
-        List<movie> temp=new ArrayList<>();
-        //tempid->productid->movieid
-//        List<Integer> timeid=releaseTimeRepository.gettimeIDByYMD(year, month, day);
-//        List<Integer> MOVIEid1=productrepository.getmovieIDBy(timeid);
-        List<release_time> time=releaseTimeRepository.findByReleaseYearAndReleaseMonthAndReleaseDay(
+        List<release_time> time= releasetimerepository.findByReleaseYearAndReleaseMonthAndReleaseDay(
                 year, month, day);
         List<Integer> tempID=new ArrayList<>();
         List<Integer> tempID1=new ArrayList<>();
@@ -50,9 +55,137 @@ public class movieService {
             tempID1.add(some.getMovieID());
         }
 
-        temp=movierepository.findByMovieIDIn(tempID1);
+        List<movie>  temp=movierepository.findByMovieIDInOrderByScoreDesc(tempID1);
 
         return temp;
+    }
+
+    /**
+     * 按年月日查找
+     * @param year
+     * @param month
+     * @param day
+     * @return
+     */
+    public List<Map<String,Float>> findBySpecificTime(
+            Integer year,Integer month,Integer day)
+    {
+        if(month==0)
+        {
+            return movierepository.getAltimate3(year);
+        }
+        if(day==0)
+        {
+            return movierepository.getAltimate2(year, month);
+        }
+        return movierepository.getAltimate1(year, month, day);
+    }
+
+    /**
+     * 按季度查询
+     * @param year
+     * @param season
+     * @return
+     */
+    public List<Map<String,Float>> findBySpecificSeason(
+            Integer year,Integer season)
+    {
+        List<Integer> temp=new ArrayList<>();
+        if(season==1){
+            for(int i=1;i<=3;++i)
+            {
+                temp.add(i);
+            }
+        }
+        else if (season==2){
+            for(int i=4;i<=6;++i)
+            {
+                temp.add(i);
+            }
+        }
+        else if (season==3){
+            for(int i=7;i<=9;++i)
+            {
+                temp.add(i);
+            }
+        }
+        else if (season==4){
+            for(int i=10;i<=12;++i)
+            {
+                temp.add(i);
+            }
+        }
+        return movierepository.getAltimate4(year,temp);
+    }
+
+
+    /**
+     * 返回有电影发布的年份
+     * @return
+     */
+    public List<Integer> provideQualifiedYear()
+    {
+        List<Integer> temp=new ArrayList<>();
+        List<year_release> temp1=yearReleaseRepository.findAll();
+        for (year_release temp2:temp1)
+        {
+            temp.add(temp2.getReleaseYear());
+        }
+        return temp;
+    }
+
+    /**
+     * 返回每年电影发布情况
+     */
+    public List<Map<Integer,Integer>> findYearMovie(Integer year)
+    {
+        List<Map<Integer,Integer>>temp=new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>(1);
+        List<year_month_release> temp1=yearmonthrepository.findByReleaseYearOrderByReleaseMonthDesc(year);
+        for(year_month_release temp2:temp1)
+        {
+            map.put(temp2.getReleaseMonth(),temp2.getReleaseNum());
+        }
+        temp.add(map);
+        return temp;
+    }
+
+    /**
+     * 返回所有电影的发布情况
+     */
+    public List<Map<Integer,Integer>> findAllMovie()
+    {
+        List<Map<Integer,Integer>>temp=new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>(1);
+        List<year_release> temp1=yearReleaseRepository.findAll();
+        for(year_release temp2:temp1)
+        {
+            map.put(temp2.getReleaseYear(),temp2.getReleaseNum());
+        }
+        temp.add(map);
+        return temp;
+    }
+
+    /**
+     * 返回电影的简单情况
+     */
+    public JSONArray getSimpleMovie(String title)
+    {
+        JSONArray result = new JSONArray();
+        List<movie> temp=movierepository.findAllByTitle(title);
+        for(movie temp1:temp)
+        {
+            /**
+             * 应该只循环一次。
+             */
+            JSONObject studentOne = new JSONObject();
+            studentOne.put("productNum", temp1.getProductNum());
+            studentOne.put("directorNum", temp1.getDirectorNum());
+            studentOne.put("actorNum", temp1.getActorNum());
+            studentOne.put("commentNum", temp1.getCommentNum());
+            result.add(studentOne);
+        }
+        return result;
     }
 
 }

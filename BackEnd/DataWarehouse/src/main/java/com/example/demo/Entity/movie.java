@@ -25,11 +25,22 @@ public class movie {
     @Column(name="actorNum")
     private Integer actorNum;
 
+    @Column(name="commentNum")
+    private Integer commentNum;
+
     @Column(name="score")
     private float score;
 
     @Column(name="hasPositiveComment")
     private char hasPositiveComment;
+
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
+    }
 
     public Integer getMovieID() {
         return movieID;

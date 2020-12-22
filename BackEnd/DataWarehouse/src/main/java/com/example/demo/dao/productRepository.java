@@ -12,9 +12,5 @@ import java.util.List;
 public interface productRepository extends JpaRepository<product, Integer>,
         JpaSpecificationExecutor<product> {
 
-    @Query(value = "select u.movieID from product u " +
-            "where u.timeID in ?1")
-    List<Integer> getmovieIDBy(List<Integer> timeID);
-
     List<product> findByTimeIDIn(List<Integer> temp);
 }
