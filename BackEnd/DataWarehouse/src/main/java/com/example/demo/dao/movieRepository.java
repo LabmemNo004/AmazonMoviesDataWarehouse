@@ -18,7 +18,8 @@ public interface movieRepository extends JpaRepository<movie, Integer>,
             "select m.title,m.score " +
                     "from release_time s join product p on s.timeID = p.timeID " +
                     "join movie m on m.movieID = p.movieID " +
-                    "where releaseYear=?1 AND releaseMonth=?2 AND releaseDay=?3",
+                    "where releaseYear=?1 AND releaseMonth=?2 AND releaseDay=?3" +
+                    " ORDER BY m.score DESC ",
             nativeQuery = true)
     List<Map<String,Float>> getAltimate1(Integer year, Integer month, Integer day);
 
@@ -26,7 +27,8 @@ public interface movieRepository extends JpaRepository<movie, Integer>,
             "select m.title,m.score " +
                     "from release_time s join product p on s.timeID = p.timeID " +
                     "join movie m on m.movieID = p.movieID " +
-                    "where releaseYear=?1 AND releaseMonth=?2",
+                    "where releaseYear=?1 AND releaseMonth=?2" +
+                    " ORDER BY m.score DESC",
             nativeQuery = true)
     List<Map<String,Float>> getAltimate2(Integer year, Integer month);
 
@@ -34,7 +36,7 @@ public interface movieRepository extends JpaRepository<movie, Integer>,
             "select m.title,m.score " +
                     "from release_time s join product p on s.timeID = p.timeID " +
                     "join movie m on m.movieID = p.movieID " +
-                    "where releaseYear=?1 ",
+                    "where releaseYear=?1 ORDER BY m.score DESC",
             nativeQuery = true)
     List<Map<String,Float>> getAltimate3(Integer year);
 
@@ -42,11 +44,12 @@ public interface movieRepository extends JpaRepository<movie, Integer>,
             "select m.title,m.score " +
                     "from release_time s join product p on s.timeID = p.timeID " +
                     "join movie m on m.movieID = p.movieID " +
-                    "where releaseYear=?1 AND releaseMonth in ?2",
+                    "where releaseYear=?1 AND releaseMonth in ?2" +
+                    " ORDER BY m.score DESC",
             nativeQuery = true)
     List<Map<String,Float>> getAltimate4(Integer year, List<Integer> month);
 
-    List<movie> findAllByTitle(String title);
+    List<movie> findAllByTitleOrderByScoreDesc(String title);
 
     //ID Score has?
 

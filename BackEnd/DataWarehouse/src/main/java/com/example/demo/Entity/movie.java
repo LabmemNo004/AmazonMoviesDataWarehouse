@@ -29,7 +29,7 @@ public class movie {
     private Integer commentNum;
 
     @Column(name="score")
-    private float score;
+    private Float score;
 
     @Column(name="hasPositiveComment")
     private char hasPositiveComment;
@@ -82,11 +82,11 @@ public class movie {
         this.actorNum = actorNum;
     }
 
-    public float getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 
