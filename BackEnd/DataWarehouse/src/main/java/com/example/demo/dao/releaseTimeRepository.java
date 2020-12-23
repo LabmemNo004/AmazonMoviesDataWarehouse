@@ -13,4 +13,8 @@ public interface releaseTimeRepository extends JpaRepository<release_time, Integ
     List<release_time> findByReleaseYearAndReleaseMonthAndReleaseDay(
             Integer year, Integer month, Integer day);
 
+    //List<release_time> findByTimeIDIn(List<Integer> temp);
+
+    release_time findByTimeID(Integer temp);
+
 }

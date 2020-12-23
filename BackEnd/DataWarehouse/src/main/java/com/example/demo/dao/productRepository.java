@@ -13,4 +13,6 @@ public interface productRepository extends JpaRepository<product, Integer>,
         JpaSpecificationExecutor<product> {
 
     List<product> findByTimeIDIn(List<Integer> temp);
+
+    List<product> findByMovieIDInOrderByTimeIDDesc(List<Integer> temp);
 }

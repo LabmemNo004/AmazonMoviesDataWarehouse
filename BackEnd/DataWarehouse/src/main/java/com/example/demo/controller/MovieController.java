@@ -2,11 +2,8 @@ package com.example.demo.controller;
 
 
 import com.alibaba.fastjson.JSONArray;
-import com.example.demo.Entity.year_monthPK;
-import com.example.demo.Entity.year_month_release;
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.JSONAndConfig.JsonResult;
-import com.example.demo.dao.movieRepository;
-import com.example.demo.dao.yearMonthRepository;
 import com.example.demo.service.movieService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +18,7 @@ import java.util.Map;
 @RestController
 //使用该注解返回类型自动调整为json.
 @RequestMapping("/movie")
-@Api(value="测试按时间查找电影")
+@Api(value="查找电影相关信息")
 public class MovieController {
 
     @Autowired
@@ -61,13 +58,13 @@ public class MovieController {
             List<Map<String, Float>> temp1= movieservice.findBySpecificSeason(year, season);
             myWatch.stop();
             return new JsonResult(temp1,
-                    "成功",myWatch.getLastTaskTimeNanos());
+                    "成功",myWatch.getLastTaskTimeMillis());
         }
         else if(season<0||season>=5)
         {
             myWatch.stop();
             return new JsonResult("返回合理的季度",
-                    "失败",myWatch.getLastTaskTimeNanos());
+                    "失败",myWatch.getLastTaskTimeMillis());
         }
         else {
             map.put("电影列表",movieservice.findBySpecifidTime(year, month, day));
@@ -96,7 +93,7 @@ public class MovieController {
         List<Map<Integer, Integer>> temp1= movieservice.findYearMovie(year);
         myWatch.stop();
         return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeNanos());
+                "成功",myWatch.getLastTaskTimeMillis());
     }
 
 
@@ -110,7 +107,7 @@ public class MovieController {
         List<Map<Integer, Integer>> temp1= movieservice.findAllMovie();
         myWatch.stop();
         return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeNanos());
+                "成功",myWatch.getLastTaskTimeMillis());
     }
 
     @PostMapping(value="/SimpleMovie")
@@ -124,13 +121,13 @@ public class MovieController {
         JSONArray temp=movieservice.getSimpleMovie(title);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeNanos());
+                "成功",myWatch.getLastTaskTimeMillis());
     }
 
     @PostMapping(value="/DetailMovie")
     @ResponseBody   //接受前端json格式的数据
     @ApiOperation(value = "查找具体电影的具体情况", notes = "前端传递电影名称")
-    public JsonResult DetailMovie()
+    public JsonResult DetailMovie(@RequestParam("title") String title)
     {
         /**
          * 产品列表：返回电影产品名称、ASIN号、发布时间、
@@ -139,56 +136,52 @@ public class MovieController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
 
-
-        int temp1=0;
+        JSONArray temp=movieservice.getDetailProduct(title);
         myWatch.stop();
-        return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeNanos());
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis());
     }
 
     @PostMapping(value="/getMovieDirector")
     @ResponseBody   //接受前端json格式的数据
     @ApiOperation(value = "查找电影的导演", notes = "前端传递电影名称")
-    public JsonResult getMovieDirector()
+    public JsonResult getMovieDirector(@RequestParam("title") String title)
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-
-
-        int temp1=0;
+        JSONObject temp=movieservice.getDirectorOrActor(title,'D');
         myWatch.stop();
-        return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeNanos());
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis());
     }
 
     @PostMapping(value="/getMovieActor")
     @ResponseBody   //接受前端json格式的数据
     @ApiOperation(value = "查找电影的演员", notes = "前端传递电影名称")
-    public JsonResult getMovieActor()
+    public JsonResult getMovieActor(@RequestParam("title") String title)
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-
-
-        int temp1=0;
+        JSONObject temp=movieservice.getDirectorOrActor(title,'A');
         myWatch.stop();
-        return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeNanos());
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis());
     }
 
-    @PostMapping(value="/getMovieUser")
-    @ResponseBody   //接受前端json格式的数据
-    @ApiOperation(value = "查找电影的评论者", notes = "前端传递电影名称")
-    public JsonResult getMovieUser()
-    {
-        StopWatch myWatch = new StopWatch("myWatch");
-        myWatch.start("task1");
 
-
-        int temp1=0;
-        myWatch.stop();
-        return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeNanos());
-    }
+//    @PostMapping(value="/getMovieUser2")
+//    @ResponseBody   //接受前端json格式的数据
+//    @ApiOperation(value = "查找电影的评论者", notes = "前端传递电影名称")
+//    public JsonResult getMovieUser2()
+//    {
+//        StopWatch myWatch = new StopWatch("myWatch");
+//        myWatch.start("task1");
+//
+//
+//        int temp1=0;
+//        myWatch.stop();
+//        return new JsonResult(temp1,
+//                "成功",myWatch.getLastTaskTimeMillis());
+//    }
 
 }

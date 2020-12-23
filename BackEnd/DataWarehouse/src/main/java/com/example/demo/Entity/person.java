@@ -34,10 +34,10 @@ public class person
     private char actorOrDirector;
 
     @Column(name="actorAverageScore") 
-    private float actorAverageScore;
+    private Float actorAverageScore;
 
     @Column(name="directorAverageScore") 
-    private float directorAverageScore;
+    private Float directorAverageScore;
 
     public Integer getPersonID() {
         return personID;
@@ -95,19 +95,19 @@ public class person
         this.actorOrDirector = actorOrDirector;
     }
 
-    public float getActorAverageScore() {
+    public Float getActorAverageScore() {
         return actorAverageScore;
     }
 
-    public void setActorAverageScore(float actorAverageScore) {
+    public void setActorAverageScore(Float actorAverageScore) {
         this.actorAverageScore = actorAverageScore;
     }
 
-    public float getDirectorAverageScore() {
+    public Float getDirectorAverageScore() {
         return directorAverageScore;
     }
 
-    public void setDirectorAverageScore(float directorAverageScore) {
+    public void setDirectorAverageScore(Float directorAverageScore) {
         this.directorAverageScore = directorAverageScore;
     }
 }

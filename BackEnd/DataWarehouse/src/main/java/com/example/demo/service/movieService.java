@@ -7,13 +7,18 @@ import com.example.demo.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class movieService {
+
+
+    /**
+     * 基本的构造函数，变量不应当超过十个
+     * 超过十个应当自己再去细分。
+     */
+    @Autowired
+    private relationRepository relationrepository;
 
     @Autowired
     private yearMonthRepository yearmonthrepository;
@@ -32,7 +37,7 @@ public class movieService {
 
     /**
      * 非sql查询，全部使用JPA 命名方法，未使用索引
-     * @param year
+     * @param year 年份
      * @param month
      * @param day
      * @return
@@ -141,7 +146,7 @@ public class movieService {
     {
         List<Map<Integer,Integer>>temp=new ArrayList<>();
         Map<Integer, Integer> map = new HashMap<>(1);
-        List<year_month_release> temp1=yearmonthrepository.findByReleaseYearOrderByReleaseMonthDesc(year);
+        List<year_month_release> temp1=yearmonthrepository.findByReleaseYearOrderByReleaseMonthAsc(year);
         for(year_month_release temp2:temp1)
         {
             map.put(temp2.getReleaseMonth(),temp2.getReleaseNum());
@@ -168,11 +173,13 @@ public class movieService {
 
     /**
      * 返回电影的简单情况
+     * @param title
+     * @return
      */
     public JSONArray getSimpleMovie(String title)
     {
         JSONArray result = new JSONArray();
-        List<movie> temp=movierepository.findAllByTitle(title);
+        List<movie> temp=movierepository.findAllByTitleOrderByScoreDesc(title);
         for(movie temp1:temp)
         {
             /**
@@ -187,5 +194,70 @@ public class movieService {
         }
         return result;
     }
+
+
+    /**
+     * 返回对应产品的情况
+     * @param title
+     * @return
+     */
+    public JSONArray getDetailProduct(String title)
+    {
+        JSONArray result = new JSONArray();
+        List<movie> temp=movierepository.findAllByTitleOrderByScoreDesc(title);
+        List<Integer> id=new ArrayList<>();
+        for(movie temp1:temp)
+        {
+            id.add(temp1.getMovieID());
+        }
+        List<product> temp1=productrepository.findByMovieIDInOrderByTimeIDDesc(id);
+
+        /**
+         * 这里暂时用结果productID多次查询releasetime,不做链接查询。
+         */
+        for(product s:temp1)
+        {
+            JSONObject studentOne = new JSONObject();
+            studentOne.put("type", s.getType());
+            studentOne.put("format", s.getFormat());
+            studentOne.put("ASIN", s.getProductID());
+            studentOne.put("URL", "http://amazon.dp.com/"+s.getMovieID().toString());
+            release_time temp2=releasetimerepository.findByTimeID(s.getTimeID());
+            JSONObject ReleaseTime = new JSONObject();
+            ReleaseTime.put("Year",temp2.getReleaseYear());
+            ReleaseTime.put("Month",temp2.getReleaseMonth());
+            ReleaseTime.put("Day",temp2.getReleaseDay());
+            studentOne.put("ReleaseTime",ReleaseTime);
+            result.add(studentOne);
+        }
+        return result;
+    }
+
+    /**
+     *查找电影参演的演员或者导演
+     * @param title 电影名
+     * @return
+     */
+    public JSONObject getDirectorOrActor(String title,char identity)
+    {
+        /**
+         * 自定义处理特殊排序
+         */
+        JSONObject result = new JSONObject();
+        if(identity=='A')
+        {
+            List<String> temp=relationrepository.getAssociateActor(title,'T');
+            //temp.sort(temp,new Comparator<String>());
+            result.put("演员列表",temp);
+        }
+        else if(identity=='D')
+        {
+            List<String> temp=relationrepository.getAssociateDirector(title,'T');
+            //temp.sort();
+            result.put("导演列表", temp);
+        }
+        return result;
+    }
+
 
 }

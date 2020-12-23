@@ -15,6 +15,6 @@ public interface yearMonthRepository extends JpaRepository<year_month_release, y
 
     List<year_month_release> findByReleaseYearLessThan(Integer year);
 
-    List<year_month_release> findByReleaseYearOrderByReleaseMonthDesc(Integer year);
+    List<year_month_release> findByReleaseYearOrderByReleaseMonthAsc(Integer year);
 
 }

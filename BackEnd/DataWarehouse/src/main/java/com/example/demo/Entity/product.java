@@ -26,7 +26,7 @@ public class product {
     private String format;
 
     @Column(name="price")
-    private float price;
+    private Float price;
 
     public String getProductID() {
         return productID;
@@ -68,11 +68,11 @@ public class product {
         this.format = format;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 }
