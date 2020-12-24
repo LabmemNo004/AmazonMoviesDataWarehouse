@@ -20,8 +20,6 @@ public class movieService {
     @Autowired
     private relationRepository relationrepository;
 
-    @Autowired
-    private yearMonthRepository yearmonthrepository;
 
     @Autowired
     private releaseTimeRepository releasetimerepository;
@@ -32,8 +30,6 @@ public class movieService {
     @Autowired
     private productRepository productrepository;
 
-    @Autowired
-    private yearReleaseRepository yearReleaseRepository;
 
     /**
      * 非sql查询，全部使用JPA 命名方法，未使用索引
@@ -123,53 +119,6 @@ public class movieService {
         return movierepository.getAltimate4(year,temp);
     }
 
-
-    /**
-     * 返回有电影发布的年份
-     * @return
-     */
-    public List<Integer> provideQualifiedYear()
-    {
-        List<Integer> temp=new ArrayList<>();
-        List<year_release> temp1=yearReleaseRepository.findAll();
-        for (year_release temp2:temp1)
-        {
-            temp.add(temp2.getReleaseYear());
-        }
-        return temp;
-    }
-
-    /**
-     * 返回每年电影发布情况
-     */
-    public List<Map<Integer,Integer>> findYearMovie(Integer year)
-    {
-        List<Map<Integer,Integer>>temp=new ArrayList<>();
-        Map<Integer, Integer> map = new HashMap<>(1);
-        List<year_month_release> temp1=yearmonthrepository.findByReleaseYearOrderByReleaseMonthAsc(year);
-        for(year_month_release temp2:temp1)
-        {
-            map.put(temp2.getReleaseMonth(),temp2.getReleaseNum());
-        }
-        temp.add(map);
-        return temp;
-    }
-
-    /**
-     * 返回所有电影的发布情况
-     */
-    public List<Map<Integer,Integer>> findAllMovie()
-    {
-        List<Map<Integer,Integer>>temp=new ArrayList<>();
-        Map<Integer, Integer> map = new HashMap<>(1);
-        List<year_release> temp1=yearReleaseRepository.findAll();
-        for(year_release temp2:temp1)
-        {
-            map.put(temp2.getReleaseYear(),temp2.getReleaseNum());
-        }
-        temp.add(map);
-        return temp;
-    }
 
     /**
      * 返回电影的简单情况

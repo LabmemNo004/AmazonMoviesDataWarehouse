@@ -24,14 +24,14 @@ public class person
     @Column(name="directorNum") 
     private Integer directorNum;
 
-    @Column(name="actorAndDirectorNum") 
-    private Integer actorAndDirectorNum;
+    @Column(name= "actorTogetherDirectorNum")
+    private Integer actorTogetherDirectorNum;
 
     @Column(name="joinNum") 
     private Integer joinNum;
 
-    @Column(name="actorOrDirector") 
-    private char actorOrDirector;
+    @Column(name= "actorEitherDirector") 
+    private Character actorEitherDirector;
 
     @Column(name="actorAverageScore") 
     private Float actorAverageScore;
@@ -72,11 +72,11 @@ public class person
     }
 
     public Integer getActorAndDirectorNum() {
-        return actorAndDirectorNum;
+        return actorTogetherDirectorNum;
     }
 
-    public void setActorAndDirectorNum(Integer actorAndDirectorNum) {
-        this.actorAndDirectorNum = actorAndDirectorNum;
+    public void setActorAndDirectorNum(Integer actorTogetherDirectorNum) {
+        this.actorTogetherDirectorNum = actorTogetherDirectorNum;
     }
 
     public Integer getJoinNum() {
@@ -87,12 +87,12 @@ public class person
         this.joinNum = joinNum;
     }
 
-    public char getActorOrDirector() {
-        return actorOrDirector;
+    public Character getActorOrDirector() {
+        return actorEitherDirector;
     }
 
-    public void setActorOrDirector(char actorOrDirector) {
-        this.actorOrDirector = actorOrDirector;
+    public void setActorOrDirector(Character actorEitherDirector) {
+        this.actorEitherDirector = actorEitherDirector;
     }
 
     public Float getActorAverageScore() {

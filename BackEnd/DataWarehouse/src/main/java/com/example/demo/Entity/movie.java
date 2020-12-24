@@ -32,7 +32,7 @@ public class movie {
     private Float score;
 
     @Column(name="hasPositiveComment")
-    private char hasPositiveComment;
+    private Character hasPositiveComment;
 
     public Integer getCommentNum() {
         return commentNum;
@@ -90,11 +90,11 @@ public class movie {
         this.score = score;
     }
 
-    public char getHasPositiveComment() {
+    public Character getHasPositiveComment() {
         return hasPositiveComment;
     }
 
-    public void setHasPositiveComment(char hasPositiveComment) {
+    public void setHasPositiveComment(Character hasPositiveComment) {
         this.hasPositiveComment = hasPositiveComment;
     }
 }

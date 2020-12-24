@@ -13,8 +13,6 @@ public interface yearMonthRepository extends JpaRepository<year_month_release, y
     @Override
     year_month_release getOne(year_monthPK year_monthPK);
 
-    List<year_month_release> findByReleaseYearLessThan(Integer year);
-
     List<year_month_release> findByReleaseYearOrderByReleaseMonthAsc(Integer year);
 
 }

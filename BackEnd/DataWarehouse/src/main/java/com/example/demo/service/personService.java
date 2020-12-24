@@ -8,6 +8,7 @@ import com.example.demo.dao.personRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,8 @@ public class personService {
     private personRepository personrepository;
 
     @Autowired
-    private cooperationRepository cooperationrepository
-;
+    private cooperationRepository cooperationrepository;
+
     public List<person> findAll()
     {
         return personrepository.findAll();
@@ -31,7 +32,22 @@ public class personService {
      */
     public JSONObject getDirectorWork(String name)
     {
-        List<Map<String, Float>> temp=personrepository.getMoviesByDirector(name);
+        JSONArray temp=personrepository.getMoviesByDirector(name);
+        int some=temp.size();
+        JSONObject temp1=new JSONObject();
+        temp1.put("电影数量",some);
+        temp1.put("电影列表",temp);
+        return temp1;
+    }
+
+    /**
+     * 根据演员名找到他参加的电影。
+     * @param name
+     * @return
+     */
+    public JSONObject getActorWork(String name)
+    {
+        List<Map<String, Float>> temp=personrepository.getMoviesByActor(name);
         int some=temp.size();
         JSONObject temp1=new JSONObject();
         temp1.put("电影数量",some);
@@ -47,7 +63,10 @@ public class personService {
     public JSONArray getGreaterDirector(Integer number)
     {
         JSONArray temp=new JSONArray();
-        List<person> persons=personrepository.findByDirectorNumGreaterThanEqualOrderByDirectorNumDesc(number);
+
+        List<person> persons=personrepository.
+                findByDirectorNumGreaterThanEqualAndActorEitherDirectorOrderByDirectorNumDesc(number,'D');
+
         for(person temp1:persons)
         {
             JSONObject temp2=new JSONObject();
@@ -60,21 +79,6 @@ public class personService {
     }
 
     /**
-     * 根据导演名找到他指导的电影。
-     * @param name
-     * @return
-     */
-    public JSONObject getActorWork(String name)
-    {
-        List<Map<String, Float>> temp=personrepository.getMoviesByActor(name);
-        int some=temp.size();
-        JSONObject temp1=new JSONObject();
-        temp1.put("电影数量",some);
-        temp1.put("电影列表",temp);
-        return temp1;
-    }
-
-    /**
      * 查找参加电影数目大于一定数目的演员
      * @param number
      * @return
@@ -82,7 +86,10 @@ public class personService {
     public JSONArray getGreaterActor(Integer number)
     {
         JSONArray temp=new JSONArray();
-        List<person> persons=personrepository.findByActorNumGreaterThanEqualOrderByActorNumDesc(number);
+
+        List<person> persons=personrepository.
+                findByActorNumGreaterThanEqualAndActorEitherDirectorOrderByActorNumDesc(number,'A');
+
         for(person temp1:persons)
         {
             JSONObject temp2=new JSONObject();
@@ -113,5 +120,39 @@ public class personService {
     {
         return cooperationrepository.getCoDirector(name);
     }
+
+    /**
+     * 查找经常合作的演员
+     * @return
+     */
+    public JSONArray getCooperatorActor()
+    {
+        JSONArray temp=cooperationrepository.getCoopratorActor();
+        return temp;
+    }
+
+    /**
+     * 查找经常合作的导演
+     * @return
+     */
+    public JSONArray getCooperatorDirector()
+    {
+        JSONArray temp=cooperationrepository.getCoopratorDirector();
+        return temp;
+    }
+
+    /**
+     * 查找经常合作的演员和导演组合
+     * @return
+     */
+    public JSONArray getCooperatorAD()
+    {
+        JSONArray temp=cooperationrepository.getCoopratorAD();
+        return temp;
+    }
+
+
+
+
 
 }

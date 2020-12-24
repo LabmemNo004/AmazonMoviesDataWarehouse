@@ -14,11 +14,11 @@ public interface relationRepository extends JpaRepository<relation, Integer>,
     @Query(value="select p.name from movie q join relation r on q.movieID = r.movieID " +
             "join person p on p.personID = r.personID " +
             "where q.title=?1 AND r.isDirector=?2 ORDER BY p.name ASC ",nativeQuery = true)
-    List<String> getAssociateDirector(String title,char identify);
+    List<String> getAssociateDirector(String title,Character identify);
 
     @Query(value="select p.name from movie q join relation r on q.movieID = r.movieID " +
             "join person p on p.personID = r.personID " +
             "where q.title=?1 AND r.isActor=?2 ORDER BY p.name ASC",nativeQuery = true)
-    List<String> getAssociateActor(String title,char identify);
+    List<String> getAssociateActor(String title,Character identify);
 
 }

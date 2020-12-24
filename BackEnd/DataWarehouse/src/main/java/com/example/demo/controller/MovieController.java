@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.JSONAndConfig.JsonResult;
 import com.example.demo.service.movieService;
+import com.example.demo.service.timeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class MovieController {
 
     @Autowired
     private movieService movieservice;
+
+    @Autowired
+    private timeService timeservice;
 
     @PostMapping(value = "/SpecificTimeMovie")
     @ResponseBody   //接受前端json格式的数据
@@ -48,7 +52,7 @@ public class MovieController {
              * 年限范围有待确定。
              */
 
-            List<Integer> temp1= movieservice.provideQualifiedYear();
+            List<Integer> temp1= timeservice.provideQualifiedYear();
             myWatch.stop();
             long temp=myWatch.getLastTaskTimeMillis();
             return new JsonResult(temp1,"失败",temp);
@@ -90,7 +94,7 @@ public class MovieController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
 
-        List<Map<Integer, Integer>> temp1= movieservice.findYearMovie(year);
+        List<Map<Integer, Integer>> temp1= timeservice.findYearMovie(year);
         myWatch.stop();
         return new JsonResult(temp1,
                 "成功",myWatch.getLastTaskTimeMillis());
@@ -104,7 +108,7 @@ public class MovieController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        List<Map<Integer, Integer>> temp1= movieservice.findAllMovie();
+        List<Map<Integer, Integer>> temp1= timeservice.findAllMovie();
         myWatch.stop();
         return new JsonResult(temp1,
                 "成功",myWatch.getLastTaskTimeMillis());
@@ -168,20 +172,20 @@ public class MovieController {
                 "成功",myWatch.getLastTaskTimeMillis());
     }
 
+    @PostMapping(value="/getMovieByType")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "根据类别查找电影", notes = "前端传递类别名称")
+    public JsonResult getMovieByType(@RequestParam("type") String type)
+    {
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
 
-//    @PostMapping(value="/getMovieUser2")
-//    @ResponseBody   //接受前端json格式的数据
-//    @ApiOperation(value = "查找电影的评论者", notes = "前端传递电影名称")
-//    public JsonResult getMovieUser2()
-//    {
-//        StopWatch myWatch = new StopWatch("myWatch");
-//        myWatch.start("task1");
-//
-//
-//        int temp1=0;
-//        myWatch.stop();
-//        return new JsonResult(temp1,
-//                "成功",myWatch.getLastTaskTimeMillis());
-//    }
+
+        int temp1=0;
+        myWatch.stop();
+        return new JsonResult(temp1,
+                "成功",myWatch.getLastTaskTimeMillis());
+    }
+
 
 }
