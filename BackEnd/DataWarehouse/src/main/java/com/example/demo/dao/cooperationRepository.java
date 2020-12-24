@@ -13,21 +13,58 @@ import java.util.Map;
 public interface cooperationRepository extends JpaRepository<cooperation, cooperationPK>,
         JpaSpecificationExecutor<cooperation> {
 
-    @Query(value = "with index as ( select s.personID from" +
-            " person s where s.name=?1)" +
-            " select s.name,c.cooperateNum from person s " +
-            "join cooperation c on s.personID = c.rightPersonID" +
-            " where c.leftPersonID=index.personID AND s.actorOrDirector='D'" +
-            " order by c.cooperateNum DESC",nativeQuery = true)
+    /**
+     * 对于with使用的临时表一定要在from中语句有体现有用到。
+     * @param name
+     * @return
+     */
+
+    @Query(value = "with summarys as ( select s.personID from person s where s.name=?1) " +
+            "select s.name,c.cooperateNum as Num " +
+            "from person s join cooperation c on s.personID = c.leftPersonID" +
+            " join summarys on c.rightPersonID=summarys.personID" +
+            " where s.actorEitherDirector='D'" +
+            "UNION all " +
+            "select s.name,c.cooperateNum as Num " +
+            "from person s join cooperation c on s.personID = c.rightPersonID " +
+            "join summarys on c.leftPersonID=summarys.personID " +
+            "where s.actorEitherDirector='D' " +
+            "order by Num DESC;",nativeQuery = true)
     JSONArray getCoDirector(String name);
 
 
-    @Query(value = "with index as ( select s.personID from" +
-            " person s where s.name=?1)" +
-            " select s.name,c.cooperateNum from person s " +
-            "join cooperation c on s.personID = c.rightPersonID" +
-            " where c.leftPersonID=index.personID AND s.actorOrDirector='A'" +
-            " order by c.cooperateNum DESC",nativeQuery = true)
+    @Query(value = "with summarys as ( select s.personID from person s where s.name=?1) " +
+            "select s.name,c.cooperateNum as Num " +
+            "from person s join cooperation c on s.personID = c.leftPersonID" +
+            " join summarys on c.rightPersonID=summarys.personID" +
+            " where s.actorEitherDirector='A'" +
+            "UNION all " +
+            "select s.name,c.cooperateNum as Num " +
+            "from person s join cooperation c on s.personID = c.rightPersonID " +
+            "join summarys on c.leftPersonID=summarys.personID " +
+            "where s.actorEitherDirector='A' " +
+            "order by Num DESC;",nativeQuery = true)
     JSONArray getCoActor(String name);
+
+
+
+
+
+    @Query(value = "select c.leftPersonID,c.rightPersonID from cooperation c" +
+            " where c.leftPersonType='A' AND c.rightPersonType='A'" +
+            " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
+    JSONArray getCoopratorActor();
+
+    @Query(value = "select c.leftPersonID,c.rightPersonID from cooperation c" +
+            " where c.leftPersonType='D' AND c.rightPersonType='D'" +
+            " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
+    JSONArray getCoopratorDirector();
+
+    @Query(value = "select c.leftPersonID,c.rightPersonID from cooperation c" +
+            " where (c.leftPersonType='A' AND c.rightPersonType='D')" +
+            " OR (c.leftPersonType='D' AND c.rightPersonType='A')" +
+            " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
+    JSONArray getCoopratorAD();
+
 
 }

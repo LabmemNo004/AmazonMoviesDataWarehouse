@@ -15,15 +15,14 @@ import java.util.Map;
 @Api(value = "hello Test")
 public class HelloController {
 
-    @GetMapping("/map")
-    public JsonResult<Map> getMap() {
-        Map<String, Object> map = new HashMap<>(4);
-        map.put("博客地址", "http://blog.itcodai.com");
-        map.put("CSDN地址", null);
-        map.put("粉丝数量", 4153);
-        return new JsonResult<>(map,"成功",0);
-    }
-
+//    @GetMapping("/map")
+//    public JsonResult<Map> getMap() {
+//        Map<String, Object> map = new HashMap<>(4);
+//        map.put("博客地址", "http://blog.itcodai.com");
+//        map.put("CSDN地址", null);
+//        map.put("粉丝数量", 4153);
+//        return new JsonResult<>(map,"成功",0);
+//    }
     @GetMapping("/hello")
     @ApiOperation(value = "获取用户信息", notes = "通过用户ID获取用户信息")
     public String getHelloWorld()
@@ -31,13 +30,6 @@ public class HelloController {
         return "Hello Spring";
     }
 
-    @GetMapping("/helloOK")
-    @ApiOperation(value = "获取用户信息", notes = "通过用户ID获取用户信息")
-    public String getHelloWorld(String temp)
-    {
-        System.out.println(temp);
-        return "Hello Spring"+temp;
-    }
 
     /**
      * 2019-2020 16个电影产品，一个电影一个产品
@@ -92,7 +84,6 @@ public class HelloController {
      */
 
 
-    //        return new JsonResult<Integer>(1,"成功");
 //        1. 按照时间进行查询及统计（例如XX年有多少电影，XX年XX月有多少电影，XX年XX季度有多少电影，周二新增多少电影等）
 //
 //        提供的查询模版：（返回前n行（n<=N,N=100[暂定]）数据，和查询到的总数据行数）
@@ -167,7 +158,6 @@ public class HelloController {
 //
 //        查询历史上最受欢迎的电影，返回电影名称、评分，并按照评分由高到低排序。
 //
-//        查询XXXX年有发布电影产品的最受欢迎的电影，返回电影名称、评分，并按照评分由高到低排序。
 //
 //        8. 按照上述条件的组合查询和统计
 //

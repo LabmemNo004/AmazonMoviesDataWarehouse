@@ -14,20 +14,25 @@ public interface personRepository extends JpaRepository<person, Integer>{
 
     List<person> findAll();
 
-    @Query(value = "select m.title,m.score from person join relation c on person.personID = c.personID" +
+    @Query(value = "select m.title,m.score from person s join relation c on s.personID = c.personID" +
             " join movie m on c.movieID = m.movieID" +
-            " where c.isDirector='T'",nativeQuery = true)
-    List<Map<String,Float>> getMoviesByDirector(String name);
+            " where c.isDirector='T' AND s.name=?1",nativeQuery = true)
+    JSONArray getMoviesByDirector(String name);
 
-    List<person> findByDirectorNumGreaterThanEqualOrderByDirectorNumDesc(Integer number);
+    List<person> findByDirectorNumGreaterThanEqualAndActorEitherDirectorOrderByDirectorNumDesc(
+            Integer number,Character actorOrDirector);
 
-    @Query(value = "select m.title,m.score from person join relation c on person.personID = c.personID" +
+
+    @Query(value = "select m.title,m.score from person s join relation c on s.personID = c.personID" +
             " join movie m on c.movieID = m.movieID" +
-            " where c.isActor='T'",nativeQuery = true)
+            " where c.isActor='T' AND s.name=?1",nativeQuery = true)
     List<Map<String,Float>> getMoviesByActor(String name);
 
-    List<person> findByActorNumGreaterThanEqualOrderByActorNumDesc(Integer number);
+    List<person> findByActorNumGreaterThanEqualAndActorEitherDirectorOrderByActorNumDesc(
+            Integer number,Character actorOrDirector);
 
+
+    List<person> findByPersonIDIn(List<Integer> number);
 
     /**
      * 理解错误，假想设计，废~~
