@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.Entity.person;
 import com.example.demo.JSONAndConfig.JsonResult;
-import com.example.demo.dao.personRepository;
 import com.example.demo.service.personService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 //使用该注解返回类型自动调整为json.
 @RequestMapping("/person")
 @Api(value="查找人员相关信息")
