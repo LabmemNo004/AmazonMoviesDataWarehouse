@@ -109,7 +109,7 @@ public class MovieController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        List<Map<Integer, Integer>> temp1= timeservice.findAllMovie();
+        JSONArray temp1= timeservice.findAllMovie();
         myWatch.stop();
         return new JsonResult(temp1,
                 "成功",myWatch.getLastTaskTimeMillis());

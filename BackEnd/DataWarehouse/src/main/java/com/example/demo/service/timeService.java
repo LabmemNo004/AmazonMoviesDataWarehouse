@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.Entity.*;
 import com.example.demo.dao.releaseTimeRepository;
 import com.example.demo.dao.yearMonthRepository;
@@ -25,16 +27,21 @@ public class timeService {
      * 返回所有电影的发布情况
      * @return
      */
-    public List<Map<Integer,Integer>> findAllMovie()
+    public JSONArray findAllMovie()
     {
-        List<Map<Integer,Integer>>temp=new ArrayList<>();
-        Map<Integer, Integer> map = new HashMap<>(1);
+        JSONArray temp=new JSONArray();
         List<year_release> temp1=yearReleaseRepository.findAll();
+        int i=1;
         for(year_release temp2:temp1)
         {
-            map.put(temp2.getReleaseYear(),temp2.getReleaseNum());
+            JSONObject yearOne=new JSONObject();
+            yearOne.put("N",i);
+            yearOne.put("Year",temp2.getReleaseYear());
+            yearOne.put("ReleaseNum",temp2.getReleaseNum());
+            temp.add(yearOne);
+            i++;
         }
-        temp.add(map);
+
         return temp;
     }
 

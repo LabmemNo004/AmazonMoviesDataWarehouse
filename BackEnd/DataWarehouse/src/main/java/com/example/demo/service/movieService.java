@@ -164,13 +164,15 @@ public class movieService {
         /**
          * 这里暂时用结果productID多次查询releasetime,不做链接查询。
          */
+        int i =1;
         for(product s:temp1)
         {
             JSONObject studentOne = new JSONObject();
+            studentOne.put("N", i);
             studentOne.put("type", s.getType());
             studentOne.put("format", s.getFormat());
             studentOne.put("ASIN", s.getProductID());
-            studentOne.put("URL", "http://amazon.dp.com/"+s.getMovieID().toString());
+            studentOne.put("URL", "http://amazon.com/dp/"+s.getProductID().toString());
             release_time temp2=releasetimerepository.findByTimeID(s.getTimeID());
             JSONObject ReleaseTime = new JSONObject();
             ReleaseTime.put("Year",temp2.getReleaseYear());
@@ -178,6 +180,7 @@ public class movieService {
             ReleaseTime.put("Day",temp2.getReleaseDay());
             studentOne.put("ReleaseTime",ReleaseTime);
             result.add(studentOne);
+            i++;
         }
         return result;
     }
