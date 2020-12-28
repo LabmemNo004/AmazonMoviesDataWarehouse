@@ -16,6 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 //使用该注解返回类型自动调整为json.
 @RequestMapping("/person")
 @Api(value="查找人员相关信息")

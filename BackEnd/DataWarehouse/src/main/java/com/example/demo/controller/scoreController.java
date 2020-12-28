@@ -11,6 +11,7 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 //使用该注解返回类型自动调整为json.
 @RequestMapping("/score")
 @Api(value="根据各个维度的评分查找电影")
