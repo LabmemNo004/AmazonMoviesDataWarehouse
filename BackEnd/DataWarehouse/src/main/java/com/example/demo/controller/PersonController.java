@@ -108,7 +108,7 @@ public class PersonController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        JSONObject temp=personService.getActorWork(name);
+        JSONArray temp=personService.getActorWork(name);
         myWatch.stop();
         return new JsonResult(temp,
                 "成功",myWatch.getLastTaskTimeMillis());

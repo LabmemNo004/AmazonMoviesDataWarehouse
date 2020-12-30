@@ -44,7 +44,7 @@ public interface cooperationRepository extends JpaRepository<cooperation, cooper
             "join summarys on c.leftPersonID=summarys.personID " +
             "where s.actorEitherDirector='A' " +
             "order by Num DESC;",nativeQuery = true)
-    JSONArray getCoActor(String name);
+    List<Map<String,String>> getCoActor(String name);
 
 
 

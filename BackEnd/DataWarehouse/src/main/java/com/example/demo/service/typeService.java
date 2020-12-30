@@ -6,6 +6,10 @@ import com.example.demo.JSONAndConfig.JsonResult;
 import com.example.demo.dao.typeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import springfox.documentation.spring.web.json.Json;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class typeService {
@@ -18,13 +22,20 @@ public class typeService {
      * @param type 类别
      * @return
      */
-    public JSONObject getMovieByType(String type)
+    public JSONArray getMovieByType(String type)
     {
-        JSONArray temp=typerepository.getMovieByType(type);
-        JSONObject temp2=new JSONObject();
-        temp2.put("电影数量",temp.size());
-        temp2.put("电影列表",temp);
-        return temp2;
+        List<Map<String,String>> temp=typerepository.getMovieByType(type);
+        JSONArray temp1=new JSONArray();
+        int i=1;
+        for(Map<String,String> t:temp){
+            JSONObject alpha=new JSONObject();
+            alpha.put("N",i);
+            alpha.put("title",t.get("title"));
+            alpha.put("score",t.get("score"));
+            i++;
+            temp1.add(alpha);
+        }
+        return temp1;
     }
 
     /**
@@ -54,26 +65,42 @@ public class typeService {
      * @param scores 类别
      * @return
      */
-    public JSONObject getGreaterscoreMovie(Integer scores)
+    public JSONArray getGreaterscoreMovie(Integer scores)
     {
-        JSONArray temp=typerepository.getGreaterScoreMovie(scores);
-        JSONObject temp2=new JSONObject();
-        temp2.put("电影数量","限定20");
-        temp2.put("电影列表",temp);
-        return temp2;
+        List<Map<String,String>> temp=typerepository.getGreaterScoreMovie(scores);
+        JSONArray temp1=new JSONArray();
+        int i=1;
+        for(Map<String ,String>t :temp){
+            JSONObject temp2=new JSONObject();
+            temp2.put("N",i);
+            temp2.put("title",t.get("title"));
+            temp2.put("score",t.get("score"));
+            temp1.add(temp2);
+            i++;
+        }
+
+        return temp1;
     }
 
     /**
      * 查找有正面评价电影
      * @return
      */
-    public JSONObject getPositivemovie()
+    public JSONArray getPositivemovie()
     {
-        JSONArray temp=typerepository.getPositiveMovie();
-        JSONObject temp2=new JSONObject();
-        temp2.put("电影数量","限定20");
-        temp2.put("电影列表",temp);
-        return temp2;
+        List<Map<String,String>> temp=typerepository.getPositiveMovie();
+        JSONArray temp1=new JSONArray();
+        int i=1;
+        for(Map<String,String> t : temp){
+            JSONObject temp2=new JSONObject();
+            temp2.put("N",i);
+            temp2.put("title",t.get("title"));
+            temp2.put("score",t.get("score"));
+            temp1.add(temp2);
+            i++;
+        }
+
+        return temp1;
     }
 
 

@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.JSONAndConfig.JsonResult;
 import com.example.demo.service.movieService;
 import com.example.demo.service.timeService;
+import com.example.demo.service.typeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class MovieController {
 
     @Autowired
     private timeService timeservice;
+
+    @Autowired
+    private typeService typeservice;
 
     @PostMapping(value = "/SpecificTimeMovie")
     @ResponseBody   //接受前端json格式的数据
@@ -95,7 +99,7 @@ public class MovieController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
 
-        List<Map<Integer, Integer>> temp1= timeservice.findYearMovie(year);
+        JSONArray temp1= timeservice.findYearMovie(year);
         myWatch.stop();
         return new JsonResult(temp1,
                 "成功",myWatch.getLastTaskTimeMillis());
@@ -109,7 +113,7 @@ public class MovieController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        List<Map<Integer, Integer>> temp1= timeservice.findAllMovie();
+        JSONArray temp1= timeservice.findAllMovie();
         myWatch.stop();
         return new JsonResult(temp1,
                 "成功",myWatch.getLastTaskTimeMillis());
@@ -154,7 +158,7 @@ public class MovieController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        JSONObject temp=movieservice.getDirectorOrActor(title,'D');
+        JSONArray temp=movieservice.getDirectorOrActor(title,'D');
         myWatch.stop();
         return new JsonResult(temp,
                 "成功",myWatch.getLastTaskTimeMillis());
@@ -167,7 +171,7 @@ public class MovieController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        JSONObject temp=movieservice.getDirectorOrActor(title,'A');
+        JSONArray temp=movieservice.getDirectorOrActor(title,'A');
         myWatch.stop();
         return new JsonResult(temp,
                 "成功",myWatch.getLastTaskTimeMillis());
@@ -180,9 +184,7 @@ public class MovieController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-
-
-        int temp1=0;
+        JSONArray temp1=typeservice.getMovieByType(type);
         myWatch.stop();
         return new JsonResult(temp1,
                 "成功",myWatch.getLastTaskTimeMillis());

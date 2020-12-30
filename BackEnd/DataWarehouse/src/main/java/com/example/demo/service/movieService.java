@@ -129,17 +129,21 @@ public class movieService {
     {
         JSONArray result = new JSONArray();
         List<movie> temp=movierepository.findAllByTitleOrderByScoreDesc(title);
+        int i=1;
         for(movie temp1:temp)
         {
             /**
              * 应该只循环一次。
              */
             JSONObject studentOne = new JSONObject();
+            studentOne.put("N", i);
             studentOne.put("productNum", temp1.getProductNum());
             studentOne.put("directorNum", temp1.getDirectorNum());
             studentOne.put("actorNum", temp1.getActorNum());
             studentOne.put("commentNum", temp1.getCommentNum());
+            studentOne.put("score", temp1.getScore());
             result.add(studentOne);
+            i++;
         }
         return result;
     }
@@ -164,13 +168,15 @@ public class movieService {
         /**
          * 这里暂时用结果productID多次查询releasetime,不做链接查询。
          */
+        int i =1;
         for(product s:temp1)
         {
             JSONObject studentOne = new JSONObject();
+            studentOne.put("N", i);
             studentOne.put("type", s.getType());
             studentOne.put("format", s.getFormat());
             studentOne.put("ASIN", s.getProductID());
-            studentOne.put("URL", "http://amazon.dp.com/"+s.getMovieID().toString());
+            studentOne.put("URL", "http://amazon.com/dp/"+s.getProductID().toString());
             release_time temp2=releasetimerepository.findByTimeID(s.getTimeID());
             JSONObject ReleaseTime = new JSONObject();
             ReleaseTime.put("Year",temp2.getReleaseYear());
@@ -178,6 +184,7 @@ public class movieService {
             ReleaseTime.put("Day",temp2.getReleaseDay());
             studentOne.put("ReleaseTime",ReleaseTime);
             result.add(studentOne);
+            i++;
         }
         return result;
     }
@@ -187,23 +194,37 @@ public class movieService {
      * @param title 电影名
      * @return
      */
-    public JSONObject getDirectorOrActor(String title,char identity)
+    public JSONArray getDirectorOrActor(String title,char identity)
     {
         /**
          * 自定义处理特殊排序
          */
-        JSONObject result = new JSONObject();
+        JSONArray result = new JSONArray();
         if(identity=='A')
         {
             List<String> temp=relationrepository.getAssociateActor(title,'T');
             //temp.sort(temp,new Comparator<String>());
-            result.put("演员列表",temp);
+            int i=1;
+            for(String t : temp){
+                JSONObject alpha=new JSONObject();
+                alpha.put("N",i);
+                alpha.put("actor",t);
+                result.add(alpha);
+                i++;
+            }
         }
         else if(identity=='D')
         {
             List<String> temp=relationrepository.getAssociateDirector(title,'T');
             //temp.sort();
-            result.put("导演列表", temp);
+            int i=1;
+            for(String t : temp){
+                JSONObject alpha=new JSONObject();
+                alpha.put("N",i);
+                alpha.put("director",t);
+                result.add(alpha);
+                i++;
+            }
         }
         return result;
     }
