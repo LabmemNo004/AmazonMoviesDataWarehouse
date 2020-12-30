@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "year_type_num")
-@IdClass(year_type_num.class)
+@IdClass(year_typePK.class)
 @Proxy(lazy = false)
 //取消懒加载避免奇怪bug
 public class year_type_num implements Serializable {

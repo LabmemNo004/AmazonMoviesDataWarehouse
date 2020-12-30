@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "cooperation")
-@IdClass(cooperation.class)
+@IdClass(cooperationPK.class)
 @Proxy(lazy = false)
 //取消懒加载避免奇怪bug
 public class cooperation implements Serializable {
