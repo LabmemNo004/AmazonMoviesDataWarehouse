@@ -65,16 +65,20 @@ public class timeService {
      * @param year 年份
      * @return
      */
-    public List<Map<Integer,Integer>> findYearMovie(Integer year)
+    public JSONArray findYearMovie(Integer year)
     {
-        List<Map<Integer,Integer>>temp=new ArrayList<>();
-        Map<Integer, Integer> map = new HashMap<>(1);
+        JSONArray temp=new JSONArray();
         List<year_month_release> temp1=yearmonthrepository.findByReleaseYearOrderByReleaseMonthAsc(year);
+        int i=1;
         for(year_month_release temp2:temp1)
         {
-            map.put(temp2.getReleaseMonth(),temp2.getReleaseNum());
+            JSONObject yearOne=new JSONObject();
+            yearOne.put("N",i);
+            yearOne.put("year",i);
+            yearOne.put("releaseNum",temp2.getReleaseNum());
+            temp.add(yearOne);
+            i++;
         }
-        temp.add(map);
         return temp;
     }
 

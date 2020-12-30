@@ -129,17 +129,21 @@ public class movieService {
     {
         JSONArray result = new JSONArray();
         List<movie> temp=movierepository.findAllByTitleOrderByScoreDesc(title);
+        int i=1;
         for(movie temp1:temp)
         {
             /**
              * 应该只循环一次。
              */
             JSONObject studentOne = new JSONObject();
+            studentOne.put("N", i);
             studentOne.put("productNum", temp1.getProductNum());
             studentOne.put("directorNum", temp1.getDirectorNum());
             studentOne.put("actorNum", temp1.getActorNum());
             studentOne.put("commentNum", temp1.getCommentNum());
+            studentOne.put("score", temp1.getScore());
             result.add(studentOne);
+            i++;
         }
         return result;
     }
@@ -190,23 +194,37 @@ public class movieService {
      * @param title 电影名
      * @return
      */
-    public JSONObject getDirectorOrActor(String title,char identity)
+    public JSONArray getDirectorOrActor(String title,char identity)
     {
         /**
          * 自定义处理特殊排序
          */
-        JSONObject result = new JSONObject();
+        JSONArray result = new JSONArray();
         if(identity=='A')
         {
             List<String> temp=relationrepository.getAssociateActor(title,'T');
             //temp.sort(temp,new Comparator<String>());
-            result.put("演员列表",temp);
+            int i=1;
+            for(String t : temp){
+                JSONObject alpha=new JSONObject();
+                alpha.put("N",i);
+                alpha.put("actor",t);
+                result.add(alpha);
+                i++;
+            }
         }
         else if(identity=='D')
         {
             List<String> temp=relationrepository.getAssociateDirector(title,'T');
             //temp.sort();
-            result.put("导演列表", temp);
+            int i=1;
+            for(String t : temp){
+                JSONObject alpha=new JSONObject();
+                alpha.put("N",i);
+                alpha.put("director",t);
+                result.add(alpha);
+                i++;
+            }
         }
         return result;
     }

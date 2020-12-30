@@ -20,7 +20,7 @@ public class scoreController {
     @Autowired
     private typeService typeservice;
 
-    @PostMapping(value="/getPopularMovie")
+    @PostMapping(value="/getPopularMovieType")
     @ResponseBody   //接受前端json格式的数据
     @ApiOperation(value = "查找受欢迎或小众的电影类别", notes = "前端传递升序或降序排列")
     public JsonResult getPopularMovie(@RequestParam(value = "up") Integer up)
@@ -40,7 +40,7 @@ public class scoreController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        JSONObject temp=typeservice.getMovieByType(type);
+        JSONArray temp=typeservice.getMovieByType(type);
         myWatch.stop();
         return new JsonResult(temp,
                 "成功",myWatch.getLastTaskTimeMillis());
@@ -53,7 +53,7 @@ public class scoreController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        JSONObject temp=typeservice.getGreaterscoreMovie(scores);
+        JSONArray temp=typeservice.getGreaterscoreMovie(scores);
         myWatch.stop();
         return new JsonResult(temp,
                 "成功",myWatch.getLastTaskTimeMillis());
@@ -66,7 +66,7 @@ public class scoreController {
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        JSONObject temp=typeservice.getPositivemovie();
+        JSONArray temp=typeservice.getPositivemovie();
         myWatch.stop();
         return new JsonResult(temp,
                 "成功",myWatch.getLastTaskTimeMillis());

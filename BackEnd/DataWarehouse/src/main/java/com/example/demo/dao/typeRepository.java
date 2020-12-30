@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 public interface typeRepository extends JpaRepository<type, String>,
         JpaSpecificationExecutor<type> {
@@ -15,7 +16,7 @@ public interface typeRepository extends JpaRepository<type, String>,
     @Query(value = "select m.title,m.score from type s join product p on s.type = p.type " +
             " join movie m on m.movieID = p.movieID " +
             " WHERE p.type=?1",nativeQuery = true)
-    JSONArray getMovieByType(String type);
+    List<Map<String,String>> getMovieByType(String type);
 
     JSONArray findByMovieNumGreaterThanOrderByMovieNumDesc(Integer index);
 
@@ -24,12 +25,12 @@ public interface typeRepository extends JpaRepository<type, String>,
     @Query(value = "select movie.title,movie.score from movie " +
             "where movie.score>=?1 ORDER BY movie.score DESC " +
             "LIMIT 20",nativeQuery = true)
-    JSONArray getGreaterScoreMovie(Integer scores);
+    List<Map<String,String>> getGreaterScoreMovie(Integer scores);
 
 
     @Query(value="select movie.title,movie.score from movie " +
-            "where movie.hasPositiveComment='T' ORDER BY movie.score DESC " +
+            "where movie.hasPositiveComment='y' ORDER BY movie.score DESC " +
             "LIMIT 20",nativeQuery = true)
-    JSONArray getPositiveMovie();
+    List<Map<String,String>> getPositiveMovie();
 
 }

@@ -45,14 +45,21 @@ public class personService {
      * @param name
      * @return
      */
-    public JSONObject getActorWork(String name)
+    public JSONArray getActorWork(String name)
     {
         List<Map<String, Float>> temp=personrepository.getMoviesByActor(name);
-        int some=temp.size();
-        JSONObject temp1=new JSONObject();
-        temp1.put("电影数量",some);
-        temp1.put("电影列表",temp);
-        return temp1;
+        JSONArray temp0=new JSONArray();
+        int i=1;
+        for(Map<String, Float> temp2:temp){
+            JSONObject temp1=new JSONObject();
+            temp1.put("N",i);
+            temp1.put("title",temp2.get("title"));
+            temp1.put("score",temp2.get("score"));
+            temp0.add(temp1);
+            i++;
+        }
+
+        return temp0;
     }
 
     /**
@@ -108,7 +115,18 @@ public class personService {
      */
     public JSONArray getActorCompanion(String name)
     {
-        return cooperationrepository.getCoActor(name);
+        List<Map<String,String>> temp=cooperationrepository.getCoActor(name);
+        JSONArray temp1=new JSONArray();
+        int i=1;
+        for(Map<String,String> t:temp){
+            JSONObject temp2=new JSONObject();
+            temp2.put("N",i);
+            temp2.put("name",t.get("name"));
+            temp2.put("cooperationNum",t.get("Num"));
+            temp1.add(temp2);
+            i++;
+        }
+        return temp1;
     }
 
     /**

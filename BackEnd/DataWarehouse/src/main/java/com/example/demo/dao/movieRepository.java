@@ -50,6 +50,7 @@ public interface movieRepository extends JpaRepository<movie, Integer>,
 
     List<movie> findAllByTitleOrderByScoreDesc(String title);
 
+
     //ID Score has?
 
 }
