@@ -24,6 +24,50 @@ public class cooperation implements Serializable {
     @Column(name = "cooperateNum")
     private Integer cooperateNum;
 
+    @Column(name = "leftPersonType")
+    private Character leftPersonType;
+
+    @Column(name = "rightPersonType")
+    private Character rightPersonType;
+
+    @Column(name = "leftPersonName")
+    private String leftPersonName;
+
+    @Column(name = "rightPersonName")
+    private String rightPersonName;
+
+    public Character getLeftPersonType() {
+        return leftPersonType;
+    }
+
+    public void setLeftPersonType(Character leftPersonType) {
+        this.leftPersonType = leftPersonType;
+    }
+
+    public Character getRightPersonType() {
+        return rightPersonType;
+    }
+
+    public void setRightPersonType(Character rightPersonType) {
+        this.rightPersonType = rightPersonType;
+    }
+
+    public String getLeftPersonName() {
+        return leftPersonName;
+    }
+
+    public void setLeftPersonName(String leftPersonName) {
+        this.leftPersonName = leftPersonName;
+    }
+
+    public String getRightPersonName() {
+        return rightPersonName;
+    }
+
+    public void setRightPersonName(String rightPersonName) {
+        this.rightPersonName = rightPersonName;
+    }
+
     public Integer getLeftPersonID() {
         return leftPersonID;
     }

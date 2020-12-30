@@ -2,7 +2,6 @@ package com.example.demo.dao;
 
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.Entity.person;
 import org.springframework.data.jpa.repository.Query;

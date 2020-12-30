@@ -177,18 +177,4 @@ public class MovieController {
                 "成功",myWatch.getLastTaskTimeMillis());
     }
 
-    @PostMapping(value="/getMovieByType")
-    @ResponseBody   //接受前端json格式的数据
-    @ApiOperation(value = "根据类别查找电影", notes = "前端传递类别名称")
-    public JsonResult getMovieByType(@RequestParam("type") String type)
-    {
-        StopWatch myWatch = new StopWatch("myWatch");
-        myWatch.start("task1");
-        JSONArray temp1=typeservice.getMovieByType(type);
-        myWatch.stop();
-        return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeMillis());
-    }
-
-
 }

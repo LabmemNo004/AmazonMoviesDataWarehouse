@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.Entity.cooperation;
 import com.example.demo.Entity.person;
 import com.example.demo.dao.cooperationRepository;
 import com.example.demo.dao.personRepository;
@@ -130,13 +131,24 @@ public class personService {
     }
 
     /**
-     * 根据人名查找合作演员情况
+     * 根据人名查找合作导演情况
      * @param name
      * @return
      */
     public JSONArray getDirectorCompanion(String name)
     {
-        return cooperationrepository.getCoDirector(name);
+        List<Map<String,String>> temp=cooperationrepository.getCoDirector(name);
+        JSONArray temp1=new JSONArray();
+        int i=1;
+        for(Map<String,String> t:temp){
+            JSONObject temp2=new JSONObject();
+            temp2.put("N",i);
+            temp2.put("name",t.get("name"));
+            temp2.put("cooperationNum",t.get("Num"));
+            temp1.add(temp2);
+            i++;
+        }
+        return temp1;
     }
 
     /**
@@ -145,8 +157,20 @@ public class personService {
      */
     public JSONArray getCooperatorActor()
     {
-        JSONArray temp=cooperationrepository.getCoopratorActor();
-        return temp;
+        JSONArray temp1=new JSONArray();
+        List<cooperation> temp=cooperationrepository.getCoopratorActor();
+        int i=0;
+        for(cooperation x:temp)
+        {
+            i++;
+            JSONObject y=new JSONObject();
+            y.put("演员1",x.getLeftPersonName());
+            y.put("演员2",x.getRightPersonName());
+            y.put("N",i);
+            temp1.add(y);
+        }
+
+        return temp1;
     }
 
     /**
@@ -155,8 +179,20 @@ public class personService {
      */
     public JSONArray getCooperatorDirector()
     {
-        JSONArray temp=cooperationrepository.getCoopratorDirector();
-        return temp;
+        JSONArray temp1=new JSONArray();
+        List<cooperation> temp=cooperationrepository.getCoopratorDirector();
+
+        int i=0;
+        for(cooperation x:temp)
+        {
+            i++;
+            JSONObject y=new JSONObject();
+            y.put("导演1",x.getLeftPersonName());
+            y.put("导演2",x.getRightPersonName());
+            y.put("N",i);
+            temp1.add(y);
+        }
+        return temp1;
     }
 
     /**
@@ -165,8 +201,31 @@ public class personService {
      */
     public JSONArray getCooperatorAD()
     {
-        JSONArray temp=cooperationrepository.getCoopratorAD();
-        return temp;
+        JSONArray temp1=new JSONArray();
+        List<cooperation> temp=cooperationrepository.getCoopratorAD();
+        int i=0;
+        for(cooperation x:temp)
+        {
+            i++;
+            JSONObject y=new JSONObject();
+            y.put("演员",x.getLeftPersonName());
+            y.put("导演",x.getRightPersonName());
+            y.put("N",i);
+            temp1.add(y);
+        }
+        List<cooperation> temp2=cooperationrepository.getCoopratorDA();
+        i=0;
+        for(cooperation x:temp2)
+        {
+            i++;
+            JSONObject y=new JSONObject();
+            y.put("导演",x.getLeftPersonName());
+            y.put("演员",x.getRightPersonName());
+            y.put("N",i);
+            temp1.add(y);
+        }
+
+        return temp1;
     }
 
 
