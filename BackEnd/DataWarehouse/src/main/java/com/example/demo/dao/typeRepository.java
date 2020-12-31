@@ -33,4 +33,11 @@ public interface typeRepository extends JpaRepository<type, String>,
             "LIMIT 20",nativeQuery = true)
     List<Map<String,String>> getPositiveMovie();
 
+    @Query(value="with some as ( select * from year_type_num where " +
+            "year=?1) " +
+            "select * from type s join some ytn on s.type = ytn.type " +
+            "order by s.movieNum DESC limit 10",nativeQuery = true)
+    List<type> getTimeTypePopular(Integer time);
+
+
 }
