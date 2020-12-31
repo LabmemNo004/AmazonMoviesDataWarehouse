@@ -30,7 +30,7 @@ public interface cooperationRepository extends JpaRepository<cooperation, cooper
             "join summarys on c.leftPersonID=summarys.personID " +
             "where s.actorEitherDirector='D' " +
             "order by Num DESC;",nativeQuery = true)
-    JSONArray getCoDirector(String name);
+    List<Map<String,String>> getCoDirector(String name);
 
 
     @Query(value = "with summarys as ( select s.personID from person s where s.name=?1) " +
@@ -50,21 +50,26 @@ public interface cooperationRepository extends JpaRepository<cooperation, cooper
 
 
 
-    @Query(value = "select c.leftPersonID,c.rightPersonID from cooperation c" +
+    @Query(value = "select * from cooperation c" +
             " where c.leftPersonType='A' AND c.rightPersonType='A'" +
             " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
-    JSONArray getCoopratorActor();
+    List<cooperation> getCoopratorActor();
 
-    @Query(value = "select c.leftPersonID,c.rightPersonID from cooperation c" +
+    @Query(value = "select * from cooperation c" +
             " where c.leftPersonType='D' AND c.rightPersonType='D'" +
             " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
-    JSONArray getCoopratorDirector();
+    List<cooperation> getCoopratorDirector();
 
-    @Query(value = "select c.leftPersonID,c.rightPersonID from cooperation c" +
-            " where (c.leftPersonType='A' AND c.rightPersonType='D')" +
-            " OR (c.leftPersonType='D' AND c.rightPersonType='A')" +
+    @Query(value = "select * from cooperation c" +
+            " where c.leftPersonType='A' AND c.rightPersonType='D'" +
             " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
-    JSONArray getCoopratorAD();
+    List<cooperation> getCoopratorAD();
+
+    @Query(value = "select * from cooperation c" +
+            " where " +
+            "c.leftPersonType='D' AND c.rightPersonType='A'" +
+            " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
+    List<cooperation> getCoopratorDA();
 
 
 }

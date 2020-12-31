@@ -1,28 +1,32 @@
 package com.example.demo.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.example.demo.JSONAndConfig.JsonResult;
+import com.example.demo.dao.releaseTimeRepository;
+import com.example.demo.service.timeService;
+import com.example.demo.service.typeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StopWatch;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/jsonresult")
-@Api(value = "hello Test")
-public class HelloController {
+@CrossOrigin
+@RequestMapping("/Combination")
+@Api(value = "Combination Test")
+public class CombinationController {
 
-//    @GetMapping("/map")
-//    public JsonResult<Map> getMap() {
-//        Map<String, Object> map = new HashMap<>(4);
-//        map.put("博客地址", "http://blog.itcodai.com");
-//        map.put("CSDN地址", null);
-//        map.put("粉丝数量", 4153);
-//        return new JsonResult<>(map,"成功",0);
-//    }
+
+
+    @Autowired
+    private timeService timeservice;
+
+
     @GetMapping("/hello")
     @ApiOperation(value = "获取用户信息", notes = "通过用户ID获取用户信息")
     public String getHelloWorld()
@@ -30,58 +34,91 @@ public class HelloController {
         return "Hello Spring";
     }
 
+    @PostMapping(value="/getTimeDirectorType")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "组合查询时间导演类型", notes = "前端传递年,导演名，类型名")
+    public JsonResult getTimeDirectorType (
+            @RequestParam("year") Integer year,
+            @RequestParam("name") String name,
+            @RequestParam("type") String type
+    )
+    {
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
+        JSONArray temp1=timeservice.getTimeDirectorType(year, name, type);
+        myWatch.stop();
+        return new JsonResult(temp1,
+                "成功",myWatch.getLastTaskTimeMillis());
+    }
 
-    /**
-     * 2019-2020 16个电影产品，一个电影一个产品
-     * 每年的1~8月有一个，在每个月的第一天发布。
-     * 八个类型，每个类型两种产品，分属两年
-     *
-     *  演员a~h 1~16
-     *  导演aa~hh 17~32
-     *  每部电影{a,b+aa,bb}{b,c+bb,cc}
-     *
-     *  第一演员actorNum 1 directorNum 2 actorAndDirectorNum 0
-     *  joinNum 3 actorOrDirector ‘A’ actorAverageScore:0 directorAverageScore:0
-     *  中间30演员actorNum 2 directorNum 4 actorAndDirectorNum 0
-     *  joinNum 6 actorOrDirector ‘A’ actorAverageScore:0 directorAverageScore:0
-     *  最后演员actorNum 1 directorNum 2 actorAndDirectorNum 0
-     *  joinNum 3 actorOrDirector ‘A’ actorAverageScore:0 directorAverageScore:0
-     *
-     *  第一演员actorNum 2 directorNum 1 actorAndDirectorNum 0
-     *  joinNum 3 actorOrDirector ‘D’ actorAverageScore:0 directorAverageScore:0
-     *  中间30导演actorNum 3 directorNum 2 actorAndDirectorNum 0
-     *  joinNum 5 actorOrDirector ‘D’ actorAverageScore:0 directorAverageScore:0
-     *  最后演员actorNum 2 directorNum 1 actorAndDirectorNum 0
-     *  joinNum 3 actorOrDirector ‘D’ actorAverageScore:0 directorAverageScore:0
-     *
-     *  cooperation 1-{2,1+16,1+17}以此类推到15等--
-     *
-     *
-     *  moive:{ 1~16
-     *  title:{类型；种类；品种；象征；印刷文字；图案；预示；预兆；预兆性人物；型；打；输入；
-     *          使转变的人；转换器；转炉；变频器；}
-     *  productNum:1
-     *  directorNum:2
-     *  actorNum:2
-     *  commentNum:?
-     *  score:1~5循环
-     *  hadPositiveComment:y/n循环
-     *  最后一个的{directorNum:1
-     *      actorNum:1}
-     *  }
-     *
-     *  relation:{
-     *      movieID:1 - personID{1 A,1+1 A,1+16 D,1+17 D}
-     *      注：movieID:16-personID{16,32}
-     *  }
-     *
-     *  product:{
-     *      1~16:1~16:1~16三个ID
-     *      type:1,1+8->type[0]以此类推
-     *      format:default
-     *      price:10~25
-     *  }
-     */
+    @PostMapping(value="/getTimePopular")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "组合查询某年最受欢迎的电影类别", notes = "前端传递年")
+    public JsonResult getTimePopular(
+            @RequestParam("year") Integer year
+            )
+    {
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
+
+        JSONArray temp1=timeservice.getTimePopular(year);
+        myWatch.stop();
+        return new JsonResult(temp1,
+                "成功",myWatch.getLastTaskTimeMillis());
+    }
+
+}
+/**
+ * 2019-2020 16个电影产品，一个电影一个产品
+ * 每年的1~8月有一个，在每个月的第一天发布。
+ * 八个类型，每个类型两种产品，分属两年
+ *
+ *  演员a~h 1~16
+ *  导演aa~hh 17~32
+ *  每部电影{a,b+aa,bb}{b,c+bb,cc}
+ *
+ *  第一演员actorNum 1 directorNum 2 actorAndDirectorNum 0
+ *  joinNum 3 actorOrDirector ‘A’ actorAverageScore:0 directorAverageScore:0
+ *  中间30演员actorNum 2 directorNum 4 actorAndDirectorNum 0
+ *  joinNum 6 actorOrDirector ‘A’ actorAverageScore:0 directorAverageScore:0
+ *  最后演员actorNum 1 directorNum 2 actorAndDirectorNum 0
+ *  joinNum 3 actorOrDirector ‘A’ actorAverageScore:0 directorAverageScore:0
+ *
+ *  第一演员actorNum 2 directorNum 1 actorAndDirectorNum 0
+ *  joinNum 3 actorOrDirector ‘D’ actorAverageScore:0 directorAverageScore:0
+ *  中间30导演actorNum 3 directorNum 2 actorAndDirectorNum 0
+ *  joinNum 5 actorOrDirector ‘D’ actorAverageScore:0 directorAverageScore:0
+ *  最后演员actorNum 2 directorNum 1 actorAndDirectorNum 0
+ *  joinNum 3 actorOrDirector ‘D’ actorAverageScore:0 directorAverageScore:0
+ *
+ *  cooperation 1-{2,1+16,1+17}以此类推到15等--
+ *
+ *
+ *  moive:{ 1~16
+ *  title:{类型；种类；品种；象征；印刷文字；图案；预示；预兆；预兆性人物；型；打；输入；
+ *          使转变的人；转换器；转炉；变频器；}
+ *  productNum:1
+ *  directorNum:2
+ *  actorNum:2
+ *  commentNum:?
+ *  score:1~5循环
+ *  hadPositiveComment:y/n循环
+ *  最后一个的{directorNum:1
+ *      actorNum:1}
+ *  }
+ *
+ *  relation:{
+ *      movieID:1 - personID{1 A,1+1 A,1+16 D,1+17 D}
+ *      注：movieID:16-personID{16,32}
+ *  }
+ *
+ *  product:{
+ *      1~16:1~16:1~16三个ID
+ *      type:1,1+8->type[0]以此类推
+ *      format:default
+ *      price:10~25
+ *  }
+ */
 
 
 //        1. 按照时间进行查询及统计（例如XX年有多少电影，XX年XX月有多少电影，XX年XX季度有多少电影，周二新增多少电影等）
@@ -164,7 +201,5 @@ public class HelloController {
 //        提供的查询模版：（返回前n行（n<=N,N=100[暂定]）数据，和查询到的总数据行数）
 //
 //        查询XXXX年以来XX执导的所有XXX类型的电影，返回电影名称、评分，并按照评分排序。
-//        查询XXXX年最受欢迎的电影类别，返回电影类别、电影类别包含的电影产品数量，并按照电影类别包含的电影产品数量由高到低排序。
-
-
-}
+//        查询XXXX年最受欢迎的电影类别，返回电影类别、电影类别包含的电影产品数量，
+//        并按照电影类别包含的电影产品数量由高到低排序。

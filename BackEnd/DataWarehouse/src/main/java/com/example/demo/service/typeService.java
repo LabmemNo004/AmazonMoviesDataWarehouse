@@ -2,12 +2,14 @@ package com.example.demo.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.Entity.type;
 import com.example.demo.JSONAndConfig.JsonResult;
 import com.example.demo.dao.typeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springfox.documentation.spring.web.json.Json;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +26,10 @@ public class typeService {
      */
     public JSONArray getMovieByType(String type)
     {
-        List<Map<String,String>> temp=typerepository.getMovieByType(type);
+        List<Map<String,Float>> temp=typerepository.getMovieByType(type);
         JSONArray temp1=new JSONArray();
         int i=1;
-        for(Map<String,String> t:temp){
+        for(Map<String,Float> t:temp){
             JSONObject alpha=new JSONObject();
             alpha.put("N",i);
             alpha.put("title",t.get("title"));
@@ -45,7 +47,8 @@ public class typeService {
      */
     public JSONArray getPopularMovie(int up)
     {
-        JSONArray temp=new JSONArray();
+        List<type> temp=new ArrayList<>();
+        JSONArray some=new JSONArray();
         if(up>0)
         {
             temp=typerepository.
@@ -57,7 +60,17 @@ public class typeService {
                     findByMovieNumGreaterThanOrderByMovieNumAsc(0);
 
         }
-        return temp;
+        int i=0;
+        for(type s:temp)
+        {
+            i++;
+            JSONObject x=new JSONObject();
+            x.put("type",s.getType());
+            x.put("movieNum",s.getMovieNum());
+            x.put("N",i);
+            some.add(x);
+        }
+        return some;
     }
 
     /**

@@ -16,11 +16,11 @@ public interface typeRepository extends JpaRepository<type, String>,
     @Query(value = "select m.title,m.score from type s join product p on s.type = p.type " +
             " join movie m on m.movieID = p.movieID " +
             " WHERE p.type=?1",nativeQuery = true)
-    List<Map<String,String>> getMovieByType(String type);
+    List<Map<String,Float>> getMovieByType(String type);
 
-    JSONArray findByMovieNumGreaterThanOrderByMovieNumDesc(Integer index);
+    List<type> findByMovieNumGreaterThanOrderByMovieNumDesc(Integer index);
 
-    JSONArray findByMovieNumGreaterThanOrderByMovieNumAsc(Integer index);
+    List<type> findByMovieNumGreaterThanOrderByMovieNumAsc(Integer index);
 
     @Query(value = "select movie.title,movie.score from movie " +
             "where movie.score>=?1 ORDER BY movie.score DESC " +
@@ -32,5 +32,12 @@ public interface typeRepository extends JpaRepository<type, String>,
             "where movie.hasPositiveComment='y' ORDER BY movie.score DESC " +
             "LIMIT 20",nativeQuery = true)
     List<Map<String,String>> getPositiveMovie();
+
+    @Query(value="with some as ( select * from year_type_num where " +
+            "year=?1) " +
+            "select * from type s join some ytn on s.type = ytn.type " +
+            "order by s.movieNum DESC limit 10",nativeQuery = true)
+    List<type> getTimeTypePopular(Integer time);
+
 
 }
