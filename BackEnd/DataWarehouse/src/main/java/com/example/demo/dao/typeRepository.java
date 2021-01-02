@@ -29,15 +29,15 @@ public interface typeRepository extends JpaRepository<type, String>,
 
 
     @Query(value="select movie.title,movie.score from movie " +
-            "where movie.hasPositiveComment='y' ORDER BY movie.score DESC " +
+            "where movie.hadPositiveComment='T' ORDER BY movie.score DESC " +
             "LIMIT 20",nativeQuery = true)
     List<Map<String,String>> getPositiveMovie();
 
-    @Query(value="with some as ( select * from year_type_num where " +
-            "year=?1) " +
-            "select * from type s join some ytn on s.type = ytn.type " +
-            "order by s.movieNum DESC limit 10",nativeQuery = true)
-    List<type> getTimeTypePopular(Integer time);
+    @Query(value="with some as ( select * from year_type_num t where " +
+            "t.year=?1) " +
+            "select s.type,some.movieNum from type s join some on s.type = some.type " +
+            "order by some.movieNum DESC limit 10",nativeQuery = true)
+    List<Map<String,Integer>> getTimeTypePopular(Integer time);
 
 
 }

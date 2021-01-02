@@ -41,7 +41,7 @@ public class timeService {
     public JSONArray findAllMovie()
     {
         JSONArray temp=new JSONArray();
-        List<year_release> temp1=yearReleaseRepository.findAll();
+        List<year_release> temp1=yearReleaseRepository.findAllMovies();
         int i=1;
         for(year_release temp2:temp1)
         {
@@ -79,13 +79,13 @@ public class timeService {
     public JSONArray findYearMovie(Integer year)
     {
         JSONArray temp=new JSONArray();
-        List<year_month_release> temp1=yearmonthrepository.findByReleaseYearOrderByReleaseMonthAsc(year);
+        List<year_month_release> temp1=yearmonthrepository.findYearMovie(year);
         int i=1;
         for(year_month_release temp2:temp1)
         {
             JSONObject yearOne=new JSONObject();
             yearOne.put("N",i);
-            yearOne.put("year",i);
+            yearOne.put("month",i);
             yearOne.put("releaseNum",temp2.getReleaseNum());
             temp.add(yearOne);
             i++;
@@ -126,14 +126,14 @@ public class timeService {
     public JSONArray getTimePopular (Integer year)
     {
         JSONArray temp=new JSONArray();
-        List<type> temp2=typeRepository.getTimeTypePopular(year);
+        List<Map<String,Integer>> temp2=typeRepository.getTimeTypePopular(year);
         int i=0;
-        for(type temp3:temp2)
+        for(Map<String,Integer> temp3:temp2)
         {
             i++;
             JSONObject temp4=new JSONObject();
-            temp4.put("电影类别",temp3.getType());
-            temp4.put("电影数量",temp3.getMovieNum());
+            temp4.put("电影类别",temp3.get("type"));
+            temp4.put("电影数量",temp3.get("movieNum"));
             temp4.put("N",i);
             temp.add(temp4);
         }
