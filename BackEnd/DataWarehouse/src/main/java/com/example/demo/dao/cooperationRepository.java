@@ -52,23 +52,27 @@ public interface cooperationRepository extends JpaRepository<cooperation, cooper
 
     @Query(value = "select * from cooperation c" +
             " where c.leftPersonType='A' AND c.rightPersonType='A'" +
-            " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
+            " AND c.cooperateNum>=5" +
+            " ORDER BY c.cooperateNum DESC",nativeQuery = true)
     List<cooperation> getCoopratorActor();
 
     @Query(value = "select * from cooperation c" +
             " where c.leftPersonType='D' AND c.rightPersonType='D'" +
-            " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
+            " AND c.cooperateNum>=2" +
+            " ORDER BY c.cooperateNum DESC",nativeQuery = true)
     List<cooperation> getCoopratorDirector();
 
     @Query(value = "select * from cooperation c" +
             " where c.leftPersonType='A' AND c.rightPersonType='D'" +
-            " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
+            " AND c.cooperateNum>=5" +
+            " ORDER BY c.cooperateNum DESC",nativeQuery = true)
     List<cooperation> getCoopratorAD();
 
     @Query(value = "select * from cooperation c" +
             " where " +
             "c.leftPersonType='D' AND c.rightPersonType='A'" +
-            " ORDER BY c.cooperateNum DESC limit 5",nativeQuery = true)
+            " AND c.cooperateNum>=5" +
+            " ORDER BY c.cooperateNum DESC",nativeQuery = true)
     List<cooperation> getCoopratorDA();
 
 

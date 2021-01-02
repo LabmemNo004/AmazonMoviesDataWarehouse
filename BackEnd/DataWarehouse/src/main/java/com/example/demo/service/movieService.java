@@ -82,12 +82,18 @@ public class movieService {
             for(Map<String, Float> temp1:temp)
             {
                 ++i;
-                JSONObject b=new JSONObject();
-                b.put("名称",temp1.get("title"));
-                b.put("评分",temp1.get("score"));
-                b.put("N",i);
-                a.add(b);
+                if(i<=50)
+                {
+                    JSONObject b=new JSONObject();
+                    b.put("名称",temp1.get("title"));
+                    b.put("评分",temp1.get("score"));
+                    b.put("N",i);
+                    a.add(b);
+                }
             }
+            JSONObject b=new JSONObject();
+            b.put("总查询数量",i);
+            a.add(b);
             return a;
         }
         if(day==0)
@@ -97,12 +103,19 @@ public class movieService {
             for(Map<String, Float> temp1:temp)
             {
                 ++i;
-                JSONObject b=new JSONObject();
-                b.put("名称",temp1.get("title"));
-                b.put("评分",temp1.get("score"));
-                b.put("N",i);
-                a.add(b);
+                if(i<=50)
+                {
+                    JSONObject b=new JSONObject();
+                    b.put("名称",temp1.get("title"));
+                    b.put("评分",temp1.get("score"));
+                    b.put("N",i);
+                    a.add(b);
+                }
+
             }
+            JSONObject b=new JSONObject();
+            b.put("总查询数量",i);
+            a.add(b);
             return a;
         }
         temp=movierepository.getAltimate1(year, month, day);
@@ -110,12 +123,18 @@ public class movieService {
         for(Map<String, Float> temp1:temp)
         {
             ++i;
-            JSONObject b=new JSONObject();
-            b.put("名称",temp1.get("title"));
-            b.put("评分",temp1.get("score"));
-            b.put("N",i);
-            a.add(b);
+            if(i<=50)
+            {
+                JSONObject b=new JSONObject();
+                b.put("名称",temp1.get("title"));
+                b.put("评分",temp1.get("score"));
+                b.put("N",i);
+                a.add(b);
+            }
         }
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        a.add(b);
         return a;
     }
 
@@ -159,12 +178,18 @@ public class movieService {
         for(Map<String, Float>a :temps)
         {
             ++i;
-            JSONObject temp1=new JSONObject();
-            temp1.put("名称",a.get("title"));
-            temp1.put("评分",a.get("score"));
-            temp1.put("N",i);
-            b.add(temp1);
+            if(i<=50)
+            {
+                JSONObject temp1=new JSONObject();
+                temp1.put("名称",a.get("title"));
+                temp1.put("评分",a.get("score"));
+                temp1.put("N",i);
+                b.add(temp1);
+            }
         }
+        JSONObject a=new JSONObject();
+        a.put("总查询数量",i);
+        b.add(a);
         return b;
     }
 
@@ -186,16 +211,22 @@ public class movieService {
             /**
              * 应该只循环一次。
              */
-            JSONObject studentOne = new JSONObject();
-            studentOne.put("N", i);
-            studentOne.put("productNum", temp1.getProductNum());
-            studentOne.put("directorNum", temp1.getDirectorNum());
-            studentOne.put("actorNum", temp1.getActorNum());
-            studentOne.put("commentNum", temp1.getCommentNum());
-            studentOne.put("score", temp1.getScore());
-            result.add(studentOne);
+            if(i<=50)
+            {
+                JSONObject studentOne = new JSONObject();
+                studentOne.put("N", i);
+                studentOne.put("productNum", temp1.getProductNum());
+                studentOne.put("directorNum", temp1.getDirectorNum());
+                studentOne.put("actorNum", temp1.getActorNum());
+                studentOne.put("commentNum", temp1.getCommentNum());
+                studentOne.put("score", temp1.getScore());
+                result.add(studentOne);
+            }
             i++;
         }
+        JSONObject a=new JSONObject();
+        a.put("总查询数量",i);
+        result.add(a);
         return result;
     }
 
@@ -222,21 +253,27 @@ public class movieService {
         int i =1;
         for(product s:temp1)
         {
-            JSONObject studentOne = new JSONObject();
-            studentOne.put("N", i);
-            studentOne.put("type", s.getType());
-            studentOne.put("format", s.getFormat());
-            studentOne.put("ASIN", s.getProductID());
-            studentOne.put("URL", "http://amazon.com/dp/"+s.getProductID().toString());
-            release_time temp2=releasetimerepository.findByTimeID(s.getTimeID());
-            JSONObject ReleaseTime = new JSONObject();
-            ReleaseTime.put("Year",temp2.getReleaseYear());
-            ReleaseTime.put("Month",temp2.getReleaseMonth());
-            ReleaseTime.put("Day",temp2.getReleaseDay());
-            studentOne.put("ReleaseTime",ReleaseTime);
-            result.add(studentOne);
+            if(i<=50)
+            {
+                JSONObject studentOne = new JSONObject();
+                studentOne.put("N", i);
+                studentOne.put("type", s.getType());
+                studentOne.put("format", s.getFormat());
+                studentOne.put("ASIN", s.getProductID());
+                studentOne.put("URL", "http://amazon.com/dp/"+s.getProductID().toString());
+                release_time temp2=releasetimerepository.findByTimeID(s.getTimeID());
+                JSONObject ReleaseTime = new JSONObject();
+                ReleaseTime.put("Year",temp2.getReleaseYear());
+                ReleaseTime.put("Month",temp2.getReleaseMonth());
+                ReleaseTime.put("Day",temp2.getReleaseDay());
+                studentOne.put("ReleaseTime",ReleaseTime);
+                result.add(studentOne);
+            }
             i++;
         }
+        JSONObject a=new JSONObject();
+        a.put("总查询数量",i);
+        result.add(a);
         return result;
     }
 
@@ -250,6 +287,7 @@ public class movieService {
         /**
          * 自定义处理特殊排序
          */
+        int j=0;
         JSONArray result = new JSONArray();
         if(identity=='A')
         {
@@ -257,12 +295,16 @@ public class movieService {
             //temp.sort(temp,new Comparator<String>());
             int i=1;
             for(String t : temp){
-                JSONObject alpha=new JSONObject();
-                alpha.put("N",i);
-                alpha.put("actor",t);
-                result.add(alpha);
+                if(i<=50)
+                {
+                    JSONObject alpha=new JSONObject();
+                    alpha.put("N",i);
+                    alpha.put("actor",t);
+                    result.add(alpha);
+                }
                 i++;
             }
+            j=i;
         }
         else if(identity=='D')
         {
@@ -270,13 +312,20 @@ public class movieService {
             //temp.sort();
             int i=1;
             for(String t : temp){
-                JSONObject alpha=new JSONObject();
-                alpha.put("N",i);
-                alpha.put("director",t);
-                result.add(alpha);
+                if(i<=50)
+                {
+                    JSONObject alpha=new JSONObject();
+                    alpha.put("N",i);
+                    alpha.put("director",t);
+                    result.add(alpha);
+                }
                 i++;
             }
+            j=j+i;
         }
+        JSONObject a=new JSONObject();
+        a.put("总查询数量",j);
+        result.add(a);
         return result;
     }
 

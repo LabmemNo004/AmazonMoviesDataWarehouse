@@ -45,14 +45,19 @@ public class timeService {
         int i=1;
         for(year_release temp2:temp1)
         {
-            JSONObject yearOne=new JSONObject();
-            yearOne.put("N",i);
-            yearOne.put("Year",temp2.getReleaseYear());
-            yearOne.put("ReleaseNum",temp2.getReleaseNum());
-            temp.add(yearOne);
+            if(i<=50)
+            {
+                JSONObject yearOne=new JSONObject();
+                yearOne.put("N",i);
+                yearOne.put("Year",temp2.getReleaseYear());
+                yearOne.put("ReleaseNum",temp2.getReleaseNum());
+                temp.add(yearOne);
+            }
             i++;
         }
-
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        temp.add(b);
         return temp;
     }
 
@@ -83,13 +88,19 @@ public class timeService {
         int i=1;
         for(year_month_release temp2:temp1)
         {
-            JSONObject yearOne=new JSONObject();
-            yearOne.put("N",i);
-            yearOne.put("month",i);
-            yearOne.put("releaseNum",temp2.getReleaseNum());
-            temp.add(yearOne);
+            if(i<=50)
+            {
+                JSONObject yearOne=new JSONObject();
+                yearOne.put("N",i);
+                yearOne.put("month",i);
+                yearOne.put("releaseNum",temp2.getReleaseNum());
+                temp.add(yearOne);
+            }
             i++;
         }
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        temp.add(b);
         return temp;
     }
 
@@ -109,12 +120,18 @@ public class timeService {
         for(Map<String,Float> temp3:temp1)
         {
             i++;
-            JSONObject temp4=new JSONObject();
-            temp4.put("电影名称",temp3.get("title"));
-            temp4.put("评分",temp3.get("score"));
-            temp4.put("N",i);
-            temp.add(temp4);
+            if(i<=50)
+            {
+                JSONObject temp4=new JSONObject();
+                temp4.put("电影名称",temp3.get("title"));
+                temp4.put("评分",temp3.get("score"));
+                temp4.put("N",i);
+                temp.add(temp4);
+            }
         }
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        temp.add(b);
         return temp;
     }
 
@@ -131,12 +148,18 @@ public class timeService {
         for(Map<String,Integer> temp3:temp2)
         {
             i++;
-            JSONObject temp4=new JSONObject();
-            temp4.put("电影类别",temp3.get("type"));
-            temp4.put("电影数量",temp3.get("movieNum"));
-            temp4.put("N",i);
-            temp.add(temp4);
+            if(i<=50)
+            {
+                JSONObject temp4=new JSONObject();
+                temp4.put("电影类别",temp3.get("type"));
+                temp4.put("电影数量",temp3.get("movieNum"));
+                temp4.put("N",i);
+                temp.add(temp4);
+            }
         }
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        temp.add(b);
         return temp;
     }
 
