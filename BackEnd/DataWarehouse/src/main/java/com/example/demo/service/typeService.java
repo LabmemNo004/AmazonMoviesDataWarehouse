@@ -30,13 +30,19 @@ public class typeService {
         JSONArray temp1=new JSONArray();
         int i=1;
         for(Map<String,Float> t:temp){
-            JSONObject alpha=new JSONObject();
-            alpha.put("N",i);
-            alpha.put("title",t.get("title"));
-            alpha.put("score",t.get("score"));
+            if(i<=50)
+            {
+                JSONObject alpha=new JSONObject();
+                alpha.put("N",i);
+                alpha.put("title",t.get("title"));
+                alpha.put("score",t.get("score"));
+                temp1.add(alpha);
+            }
             i++;
-            temp1.add(alpha);
         }
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        temp1.add(b);
         return temp1;
     }
 
@@ -64,12 +70,18 @@ public class typeService {
         for(type s:temp)
         {
             i++;
-            JSONObject x=new JSONObject();
-            x.put("type",s.getType());
-            x.put("movieNum",s.getMovieNum());
-            x.put("N",i);
-            some.add(x);
+            if(i<=50)
+            {
+                JSONObject x=new JSONObject();
+                x.put("type",s.getType());
+                x.put("movieNum",s.getMovieNum());
+                x.put("N",i);
+                some.add(x);
+            }
         }
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        some.add(b);
         return some;
     }
 
@@ -84,14 +96,19 @@ public class typeService {
         JSONArray temp1=new JSONArray();
         int i=1;
         for(Map<String ,String>t :temp){
-            JSONObject temp2=new JSONObject();
-            temp2.put("N",i);
-            temp2.put("title",t.get("title"));
-            temp2.put("score",t.get("score"));
-            temp1.add(temp2);
+            if(i<=50)
+            {
+                JSONObject temp2=new JSONObject();
+                temp2.put("N",i);
+                temp2.put("title",t.get("title"));
+                temp2.put("score",t.get("score"));
+                temp1.add(temp2);
+            }
             i++;
         }
-
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        temp1.add(b);
         return temp1;
     }
 
@@ -105,14 +122,19 @@ public class typeService {
         JSONArray temp1=new JSONArray();
         int i=1;
         for(Map<String,String> t : temp){
-            JSONObject temp2=new JSONObject();
-            temp2.put("N",i);
-            temp2.put("title",t.get("title"));
-            temp2.put("score",t.get("score"));
-            temp1.add(temp2);
+            if(i<=50)
+            {
+                JSONObject temp2=new JSONObject();
+                temp2.put("N",i);
+                temp2.put("title",t.get("title"));
+                temp2.put("score",t.get("score"));
+                temp1.add(temp2);
+            }
             i++;
         }
-
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",i);
+        temp1.add(b);
         return temp1;
     }
 

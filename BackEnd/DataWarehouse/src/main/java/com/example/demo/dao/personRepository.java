@@ -16,18 +16,17 @@ public interface personRepository extends JpaRepository<person, Integer>{
     @Query(value = "select m.title,m.score from person s join relation c on s.personID = c.personID" +
             " join movie m on c.movieID = m.movieID" +
             " where c.isDirector='T' AND s.name=?1 " +
-            " order by m.score DESC limit 100",nativeQuery = true)
+            " order by m.score DESC",nativeQuery = true)
     List<Map<String,Float>> getMoviesByDirector(String name);
 
 
     @Query(value="select * from person where person.directorNum>=?1 " +
-            "AND person.actorEitherDirector=?2 ORDER BY person.directorNum DESC" +
-            " limit 50",nativeQuery = true)
+            "AND person.actorEitherDirector=?2 ORDER BY person.directorNum DESC"
+            ,nativeQuery = true)
     List<person> getGreaterDirector(Integer number,Character actorOrDirector);
 
     @Query(value="select * from person where person.actorNum>=?1 " +
-            "AND person.actorEitherDirector=?2 ORDER BY person.actorNum DESC" +
-            " limit 50",nativeQuery = true)
+            "AND person.actorEitherDirector=?2 ORDER BY person.actorNum DESC",nativeQuery = true)
     List<person> getGreaterActor(Integer number,Character actorOrDirector);
 
 //    List<person> findByDirectorNumGreaterThanEqualAndActorEitherDirectorOrderByDirectorNumDesc(
@@ -39,7 +38,7 @@ public interface personRepository extends JpaRepository<person, Integer>{
     @Query(value = "select m.title,m.score from person s join relation c on s.personID = c.personID" +
             " join movie m on c.movieID = m.movieID" +
             " where c.isActor='T' AND s.name=?1" +
-            " ORDER BY m.score DESC limit 100",nativeQuery = true)
+            " ORDER BY m.score DESC",nativeQuery = true)
     List<Map<String,Float>> getMoviesByActor(String name);
 
 

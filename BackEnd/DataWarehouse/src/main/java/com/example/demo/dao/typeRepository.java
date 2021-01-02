@@ -23,20 +23,18 @@ public interface typeRepository extends JpaRepository<type, String>,
     List<type> findByMovieNumGreaterThanOrderByMovieNumAsc(Integer index);
 
     @Query(value = "select movie.title,movie.score from movie " +
-            "where movie.score>=?1 ORDER BY movie.score DESC " +
-            "LIMIT 20",nativeQuery = true)
+            "where movie.score>=?1 ORDER BY movie.score DESC ",nativeQuery = true)
     List<Map<String,String>> getGreaterScoreMovie(Integer scores);
 
 
     @Query(value="select movie.title,movie.score from movie " +
-            "where movie.hadPositiveComment='T' ORDER BY movie.score DESC " +
-            "LIMIT 20",nativeQuery = true)
+            "where movie.hadPositiveComment='T' ORDER BY movie.score DESC ",nativeQuery = true)
     List<Map<String,String>> getPositiveMovie();
 
     @Query(value="with some as ( select * from year_type_num t where " +
             "t.year=?1) " +
             "select s.type,some.movieNum from type s join some on s.type = some.type " +
-            "order by some.movieNum DESC limit 10",nativeQuery = true)
+            "order by some.movieNum DESC",nativeQuery = true)
     List<Map<String,Integer>> getTimeTypePopular(Integer time);
 
 
