@@ -34,6 +34,23 @@ public class movie {
     @Column(name="hasPositiveComment")
     private Character hasPositiveComment;
 
+    public movie() {
+    }
+
+    public movie(Integer movieID, String title, Integer productNum,
+                 Integer directorNum, Integer actorNum,
+                 Integer commentNum, Float score,
+                 Character hasPositiveComment) {
+        this.movieID = movieID;
+        this.title = title;
+        this.productNum = productNum;
+        this.directorNum = directorNum;
+        this.actorNum = actorNum;
+        this.commentNum = commentNum;
+        this.score = score;
+        this.hasPositiveComment = hasPositiveComment;
+    }
+
     public Integer getCommentNum() {
         return commentNum;
     }

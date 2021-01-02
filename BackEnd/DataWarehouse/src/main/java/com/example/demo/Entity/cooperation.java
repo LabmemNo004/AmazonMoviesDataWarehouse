@@ -68,6 +68,22 @@ public class cooperation implements Serializable {
         this.rightPersonName = rightPersonName;
     }
 
+    public cooperation() {
+    }
+
+    public cooperation(Integer leftPersonID, Integer rightPersonID,
+                       Integer cooperateNum, Character leftPersonType,
+                       Character rightPersonType, String leftPersonName,
+                       String rightPersonName) {
+        this.leftPersonID = leftPersonID;
+        this.rightPersonID = rightPersonID;
+        this.cooperateNum = cooperateNum;
+        this.leftPersonType = leftPersonType;
+        this.rightPersonType = rightPersonType;
+        this.leftPersonName = leftPersonName;
+        this.rightPersonName = rightPersonName;
+    }
+
     public Integer getLeftPersonID() {
         return leftPersonID;
     }
