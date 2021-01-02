@@ -33,11 +33,22 @@ public class personService {
      */
     public JSONObject getDirectorWork(String name)
     {
-        JSONArray temp=personrepository.getMoviesByDirector(name);
+        List<Map<String,Float>> temp=personrepository.getMoviesByDirector(name);
         int some=temp.size();
+        JSONArray b=new JSONArray();
         JSONObject temp1=new JSONObject();
+        int i=0;
+        for(Map<String,Float> temp2:temp)
+        {
+            ++i;
+            JSONObject a=new JSONObject();
+            a.put("名称",temp2.get("title"));
+            a.put("评分",temp2.get("score"));
+            a.put("N",i);
+            b.add(a);
+        }
         temp1.put("电影数量",some);
-        temp1.put("电影列表",temp);
+        temp1.put("电影列表",b);
         return temp1;
     }
 
@@ -73,15 +84,17 @@ public class personService {
         JSONArray temp=new JSONArray();
 
         List<person> persons=personrepository.
-                findByDirectorNumGreaterThanEqualAndActorEitherDirectorOrderByDirectorNumDesc(number,'D');
+                getGreaterDirector(number,'D');
 
+        int i=1;
         for(person temp1:persons)
         {
             JSONObject temp2=new JSONObject();
+            temp2.put("N",i);
             temp2.put("导演名称",temp1.getName());
             temp2.put("参与电影数量",temp1.getDirectorNum());
-            temp2.put("评分",temp1.getDirectorAverageScore());
             temp.add(temp2);
+            i++;
         }
         return temp;
     }
@@ -96,15 +109,17 @@ public class personService {
         JSONArray temp=new JSONArray();
 
         List<person> persons=personrepository.
-                findByActorNumGreaterThanEqualAndActorEitherDirectorOrderByActorNumDesc(number,'A');
+                getGreaterActor(number,'A');
 
+        int i=0;
         for(person temp1:persons)
         {
             JSONObject temp2=new JSONObject();
+            temp2.put("N",i);
             temp2.put("演员名称",temp1.getName());
-            temp2.put("参与电影数量",temp1.getDirectorNum());
-            temp2.put("评分",temp1.getDirectorAverageScore());
+            temp2.put("参与电影数量",temp1.getActorNum());
             temp.add(temp2);
+            i++;
         }
         return temp;
     }

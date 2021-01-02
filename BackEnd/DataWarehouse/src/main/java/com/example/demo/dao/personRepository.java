@@ -15,20 +15,34 @@ public interface personRepository extends JpaRepository<person, Integer>{
 
     @Query(value = "select m.title,m.score from person s join relation c on s.personID = c.personID" +
             " join movie m on c.movieID = m.movieID" +
-            " where c.isDirector='T' AND s.name=?1",nativeQuery = true)
-    JSONArray getMoviesByDirector(String name);
+            " where c.isDirector='T' AND s.name=?1 " +
+            " order by m.score DESC limit 100",nativeQuery = true)
+    List<Map<String,Float>> getMoviesByDirector(String name);
 
-    List<person> findByDirectorNumGreaterThanEqualAndActorEitherDirectorOrderByDirectorNumDesc(
-            Integer number,Character actorOrDirector);
 
+    @Query(value="select * from person where person.directorNum>=?1 " +
+            "AND person.actorEitherDirector=?2 ORDER BY person.directorNum DESC" +
+            " limit 50",nativeQuery = true)
+    List<person> getGreaterDirector(Integer number,Character actorOrDirector);
+
+    @Query(value="select * from person where person.actorNum>=?1 " +
+            "AND person.actorEitherDirector=?2 ORDER BY person.actorNum DESC" +
+            " limit 50",nativeQuery = true)
+    List<person> getGreaterActor(Integer number,Character actorOrDirector);
+
+//    List<person> findByDirectorNumGreaterThanEqualAndActorEitherDirectorOrderByDirectorNumDesc(
+//            Integer number,Character actorOrDirector);
+//
+//    List<person> findByActorNumGreaterThanEqualAndActorEitherDirectorOrderByActorNumDesc(
+//            Integer number,Character actorOrDirector);
 
     @Query(value = "select m.title,m.score from person s join relation c on s.personID = c.personID" +
             " join movie m on c.movieID = m.movieID" +
-            " where c.isActor='T' AND s.name=?1",nativeQuery = true)
+            " where c.isActor='T' AND s.name=?1" +
+            " ORDER BY m.score DESC limit 100",nativeQuery = true)
     List<Map<String,Float>> getMoviesByActor(String name);
 
-    List<person> findByActorNumGreaterThanEqualAndActorEitherDirectorOrderByActorNumDesc(
-            Integer number,Character actorOrDirector);
+
 
 
     List<person> findByPersonIDIn(List<Integer> number);

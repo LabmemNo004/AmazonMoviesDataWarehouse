@@ -42,8 +42,10 @@ public class movieService {
     {
         List<release_time> time= releasetimerepository.findByReleaseYearAndReleaseMonthAndReleaseDay(
                 year, month, day);
+
         List<Integer> tempID=new ArrayList<>();
         List<Integer> tempID1=new ArrayList<>();
+
         for(release_time some:time)
         {
             tempID.add(some.getTimeID());
@@ -68,18 +70,53 @@ public class movieService {
      * @param day
      * @return
      */
-    public List<Map<String,Float>> findBySpecificTime(
+    public JSONArray findBySpecificTime(
             Integer year,Integer month,Integer day)
     {
+        List<Map<String, Float>> temp=new ArrayList<>();
+        JSONArray a=new JSONArray();
         if(month==0)
         {
-            return movierepository.getAltimate3(year);
+            temp=movierepository.getAltimate3(year);
+            int i=0;
+            for(Map<String, Float> temp1:temp)
+            {
+                ++i;
+                JSONObject b=new JSONObject();
+                b.put("名称",temp1.get("title"));
+                b.put("评分",temp1.get("score"));
+                b.put("N",i);
+                a.add(b);
+            }
+            return a;
         }
         if(day==0)
         {
-            return movierepository.getAltimate2(year, month);
+            temp=movierepository.getAltimate2(year, month);
+            int i=0;
+            for(Map<String, Float> temp1:temp)
+            {
+                ++i;
+                JSONObject b=new JSONObject();
+                b.put("名称",temp1.get("title"));
+                b.put("评分",temp1.get("score"));
+                b.put("N",i);
+                a.add(b);
+            }
+            return a;
         }
-        return movierepository.getAltimate1(year, month, day);
+        temp=movierepository.getAltimate1(year, month, day);
+        int i=0;
+        for(Map<String, Float> temp1:temp)
+        {
+            ++i;
+            JSONObject b=new JSONObject();
+            b.put("名称",temp1.get("title"));
+            b.put("评分",temp1.get("score"));
+            b.put("N",i);
+            a.add(b);
+        }
+        return a;
     }
 
     /**
@@ -88,7 +125,7 @@ public class movieService {
      * @param season
      * @return
      */
-    public List<Map<String,Float>> findBySpecificSeason(
+    public JSONArray findBySpecificSeason(
             Integer year,Integer season)
     {
         List<Integer> temp=new ArrayList<>();
@@ -116,8 +153,22 @@ public class movieService {
                 temp.add(i);
             }
         }
-        return movierepository.getAltimate4(year,temp);
+        JSONArray b=new JSONArray();
+        List<Map<String, Float>> temps=movierepository.getAltimate4(year,temp);
+        int i=0;
+        for(Map<String, Float>a :temps)
+        {
+            ++i;
+            JSONObject temp1=new JSONObject();
+            temp1.put("名称",a.get("title"));
+            temp1.put("评分",a.get("score"));
+            temp1.put("N",i);
+            b.add(temp1);
+        }
+        return b;
     }
+
+
 
 
     /**

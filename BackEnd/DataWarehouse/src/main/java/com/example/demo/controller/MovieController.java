@@ -64,7 +64,7 @@ public class MovieController {
         }
         if(season>0&&season<5)
         {
-            List<Map<String, Float>> temp1= movieservice.findBySpecificSeason(year, season);
+            JSONArray temp1= movieservice.findBySpecificSeason(year, season);
             myWatch.stop();
             return new JsonResult(temp1,
                     "成功",myWatch.getLastTaskTimeMillis());
@@ -76,16 +76,11 @@ public class MovieController {
                     "失败",myWatch.getLastTaskTimeMillis());
         }
         else {
-            map.put("电影列表",movieservice.findBySpecifidTime(year, month, day));
 
-            /**
-             * service层对month ,day缺省的情况做分别处理。
-             */
-            map.put("测试所查timeID",movieservice.findBySpecificTime(year, month, day));
+            map.put("电影列表",movieservice.findBySpecificTime(year, month, day));
 
             myWatch.stop();
             long temp=myWatch.getLastTaskTimeMillis();
-
             return new JsonResult(map,"成功",temp);
         }
     }
