@@ -39,6 +39,24 @@ public class person
     @Column(name="directorAverageScore") 
     private Float directorAverageScore;
 
+    public person(Integer personID, String name, Integer actorNum,
+                  Integer directorNum, Integer actorTogetherDirectorNum,
+                  Integer joinNum, Character actorEitherDirector,
+                  Float actorAverageScore, Float directorAverageScore) {
+        this.personID = personID;
+        this.name = name;
+        this.actorNum = actorNum;
+        this.directorNum = directorNum;
+        this.actorTogetherDirectorNum = actorTogetherDirectorNum;
+        this.joinNum = joinNum;
+        this.actorEitherDirector = actorEitherDirector;
+        this.actorAverageScore = actorAverageScore;
+        this.directorAverageScore = directorAverageScore;
+    }
+
+    public person() {
+    }
+
     public Integer getPersonID() {
         return personID;
     }

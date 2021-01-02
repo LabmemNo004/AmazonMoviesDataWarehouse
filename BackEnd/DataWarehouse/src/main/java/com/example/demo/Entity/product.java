@@ -26,7 +26,21 @@ public class product {
     private String format;
 
     @Column(name="price")
-    private Float price;
+    private String price;
+
+    public product(String productID, Integer movieID,
+                   Integer timeID, String type,
+                   String format, String price) {
+        this.productID = productID;
+        this.movieID = movieID;
+        this.timeID = timeID;
+        this.type = type;
+        this.format = format;
+        this.price = price;
+    }
+
+    public product() {
+    }
 
     public String getProductID() {
         return productID;
@@ -68,11 +82,11 @@ public class product {
         this.format = format;
     }
 
-    public Float getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }

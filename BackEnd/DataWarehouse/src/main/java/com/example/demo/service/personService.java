@@ -166,6 +166,7 @@ public class personService {
             JSONObject y=new JSONObject();
             y.put("演员1",x.getLeftPersonName());
             y.put("演员2",x.getRightPersonName());
+            y.put("合作次数",x.getCooperateNum());
             y.put("N",i);
             temp1.add(y);
         }
@@ -189,6 +190,7 @@ public class personService {
             JSONObject y=new JSONObject();
             y.put("导演1",x.getLeftPersonName());
             y.put("导演2",x.getRightPersonName());
+            y.put("合作次数",x.getCooperateNum());
             y.put("N",i);
             temp1.add(y);
         }
@@ -210,6 +212,7 @@ public class personService {
             JSONObject y=new JSONObject();
             y.put("演员",x.getLeftPersonName());
             y.put("导演",x.getRightPersonName());
+            y.put("合作次数",x.getCooperateNum());
             y.put("N",i);
             temp1.add(y);
         }
@@ -221,6 +224,7 @@ public class personService {
             JSONObject y=new JSONObject();
             y.put("导演",x.getLeftPersonName());
             y.put("演员",x.getRightPersonName());
+            y.put("合作次数",x.getCooperateNum());
             y.put("N",i);
             temp1.add(y);
         }
