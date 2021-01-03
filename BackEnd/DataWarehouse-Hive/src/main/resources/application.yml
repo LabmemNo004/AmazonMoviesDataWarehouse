@@ -1,0 +1,32 @@
+server:
+  port: 8899
+
+spring:
+  datasource:
+#    druid:
+      # hive数据源
+      url: jdbc:hive2://47.112.129.193:10000/movies
+      username: root
+      password: dwh13579
+      driver-class-name: org.apache.hive.jdbc.HiveDriver
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 连接池
+#      initial-size: 1
+#      min-idle: 1
+#      max-active: 5
+#      max-wait: 10000
+#      time-between-eviction-runs-millis: 10000
+#      min-evictable-idle-time-millis: 300000
+#      validation-query: SELECT 'X'
+#      test-while-idle: true
+#      test-on-borrow: false
+#      test-on-return: false
+#      pool-prepared-statements: true
+#      max-pool-prepared-statement-per-connection-size: 20
+#      filters: stat
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+  type-aliases-package: com.dwh.hive.pojo
+
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dwh.hive.dao.ProductDAO">
+
+    <select id="findByTimeIDIn">
+            select
+                productID as productID,
+                movieID as movieID,
+                timeID as timeID,
+                type as type,
+                format as format,
+                price as price,
+            from product
+            where timeID in
+                <foreach collection="temp" item="timeID" open="(" separator="," close=")">
+                    #{param1}
+                </foreach>
+    </select>
+
+    <select id="findByTimeIDIn">
+        select
+        productID as productID,
+        movieID as movieID,
+        timeID as timeID,
+        type as type,
+        format as format,
+        price as price,
+        from product
+        where movieID in
+        <foreach collection="temp" item="movieID" open="(" separator="," close=")">
+            #{param1}
+        </foreach>
+    </select>
+
+</mapper>
