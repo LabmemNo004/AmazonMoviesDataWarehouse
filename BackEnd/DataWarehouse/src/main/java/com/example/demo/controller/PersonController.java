@@ -83,9 +83,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getDirectorWork(name);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @GetMapping(value="/getGreaterDirector")
@@ -96,9 +99,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getGreaterDirector(number);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @GetMapping(value="/getActorWorks")
@@ -109,9 +115,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getActorWork(name);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @GetMapping(value="/getGreaterActor")
@@ -122,9 +131,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getGreaterActor(number);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
 
@@ -136,9 +148,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getDirectorCompanion(name);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @GetMapping(value="/getCoactor")
@@ -149,9 +164,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getActorCompanion(name);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @GetMapping(value="/getCooperatorActor")
@@ -162,9 +180,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getCooperatorActor();
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
 
@@ -176,9 +197,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getCooperatorDirector();
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @GetMapping(value="/getCooperatorAD")
@@ -189,9 +213,12 @@ public class PersonController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=personService.getCooperatorAD();
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
 }

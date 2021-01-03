@@ -46,9 +46,12 @@ public class CombinationController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp1=timeservice.getTimeDirectorType(year, name, type);
+        int i=temp1.size()-1;
+        Object counts=temp1.getJSONObject(i).get("总查询数量");
+        temp1.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @PostMapping(value="/getTimePopular")
@@ -62,9 +65,12 @@ public class CombinationController {
         myWatch.start("task1");
 
         JSONArray temp1=timeservice.getTimePopular(year);
+        int i=temp1.size()-1;
+        Object counts=temp1.getJSONObject(i).get("总查询数量");
+        temp1.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
 }

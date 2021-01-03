@@ -5,6 +5,16 @@ public class JsonResult<T> {
     private long code;
     private String msg;
 
+    private Object totalNum;
+
+    public Object getTotalNum() {
+        return totalNum;
+    }
+
+    public void setTotalNum(Object totalNum) {
+        this.totalNum = totalNum;
+    }
+
     public T getData() {
         return data;
     }
@@ -71,6 +81,19 @@ public class JsonResult<T> {
 
     /**
      * 有数据返回，code记录查询时间，必填
+     */
+    public JsonResult(T data,String msg,long code,Object totalNum){
+        this.totalNum=totalNum;
+        this.data = data;
+        this.code = code;
+        this.msg = msg;
+    }
+
+    /**
+     * 可选
+     * @param data
+     * @param msg
+     * @param code
      */
     public JsonResult(T data,String msg,long code){
         this.data = data;
