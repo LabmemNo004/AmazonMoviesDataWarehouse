@@ -1,0 +1,24 @@
+select movieID, title, productNum from movie
+where title='Harry Potter and the Goblet of Fire'
+   or title='Harry Potter and the Chamber of Secrets';
+   //
+   6902,Harry Potter and the Chamber of Secrets,2
+   16272,Harry Potter and the Chamber of Secrets,1
+   21911,Harry Potter and the Chamber of Secrets ,6
+   53076,Harry Potter and the Chamber of Secrets ,1
+   56233,Harry Potter and the Chamber of Secrets ,1
+   77658,Harry Potter and the Chamber of Secrets ,1
+   84046,Harry Potter and the Chamber of Secrets ,1
+   118771,Harry Potter and the Chamber of Secrets,1
+   5889,Harry Potter and the Goblet of Fire,2
+   25899,Harry Potter and the Goblet of Fire ,5
+-------------------------
+元数据
+元数据，描述数据的数据，可以是表的名字，schema，总行数、存储位置、历史数据、资源查找、文件记录等，
+是一种电子式目录。在数据仓库系统中，包括描述哪些数据在数据仓库中的元数据、
+定义要进入数据仓库中的数据和从数据仓库中产生的数据的元数据、记录数据抽取工作时间安排(根据业务事件进行的)的元数据、
+记录并检测系统数据一致性和执行情况的元数据、衡量数据质量的元数据。
+
+存储位置：D:\github\Lab-s-Data-Warehouse\BackEnd\DataWarehouse\src\main\resources\static\source
+
+

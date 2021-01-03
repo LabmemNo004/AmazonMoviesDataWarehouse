@@ -31,12 +31,12 @@ public class personService {
      * @param name
      * @return
      */
-    public JSONObject getDirectorWork(String name)
+    public JSONArray getDirectorWork(String name)
     {
         List<Map<String,Float>> temp=personrepository.getMoviesByDirector(name);
         int some=temp.size();
         JSONArray b=new JSONArray();
-        JSONObject temp1=new JSONObject();
+
         long i=0;
         for(Map<String,Float> temp2:temp)
         {
@@ -50,9 +50,10 @@ public class personService {
                 b.add(a);
             }
         }
-        temp1.put("电影数量",some);
-        temp1.put("电影列表",b);
-        return temp1;
+        JSONObject temp1=new JSONObject();
+        temp1.put("总查询数量",i);
+        b.add(temp1);
+        return b;
     }
 
     /**
