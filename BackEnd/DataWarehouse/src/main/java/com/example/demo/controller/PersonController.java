@@ -11,7 +11,6 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -91,14 +90,14 @@ public class PersonController {
                 "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
-    @GetMapping(value="/getGreaterDirector")
+    @GetMapping(value="/getDirectorWorksLike")
     @ResponseBody   //接受前端json格式的数据
-    @ApiOperation(value = "按作品数量查询导演", notes = "前端传递作品数量")
-    public JsonResult getGreaterDirector(@RequestParam(value = "number") int number)
+    @ApiOperation(value = "查找导演所指导的电影", notes = "前端传递导演名称")
+    public JsonResult getDirectorWorksLike(@RequestParam(value = "name") String name)
     {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
-        JSONArray temp=personService.getGreaterDirector(number);
+        JSONArray temp=personService.getDirectorWorkLike(name);
         int i=temp.size()-1;
         Object counts=temp.getJSONObject(i).get("总查询数量");
         temp.fluentRemove(i);
@@ -106,6 +105,8 @@ public class PersonController {
         return new JsonResult(temp,
                 "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
+
+
 
     @GetMapping(value="/getActorWorks")
     @ResponseBody   //接受前端json格式的数据
@@ -122,6 +123,42 @@ public class PersonController {
         return new JsonResult(temp,
                 "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
+
+    @GetMapping(value="/getActorWorksLike")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "查找演员所参加的电影", notes = "前端传递演员名称")
+    public JsonResult getActorWorksLike(@RequestParam(value = "name") String name)
+    {
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
+        JSONArray temp=personService.getActorWorkLike(name);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
+        myWatch.stop();
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
+    }
+
+
+
+
+    @GetMapping(value="/getGreaterDirector")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "按作品数量查询导演", notes = "前端传递作品数量")
+    public JsonResult getGreaterDirector(@RequestParam(value = "number") int number)
+    {
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
+        JSONArray temp=personService.getGreaterDirector(number);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
+        myWatch.stop();
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
+    }
+
 
     @GetMapping(value="/getGreaterActor")
     @ResponseBody   //接受前端json格式的数据

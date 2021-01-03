@@ -13,6 +13,12 @@ public interface movieRepository extends JpaRepository<movie, Integer>,
 
     List<movie> findByMovieIDInOrderByScoreDesc(List<Integer> temp);
 
+    List<movie> findAllByTitleOrderByScoreDesc(String title);
+
+    @Query(value="select * from movie where " +
+            " title like concat(?1,'%') ORDER BY score DESC ",nativeQuery = true)
+    List<movie> getDetailProductLike(String title);
+
     @Query(value=
             "select m.title,m.score " +
                     "from release_time s join product p on s.timeID = p.timeID " +
@@ -48,7 +54,13 @@ public interface movieRepository extends JpaRepository<movie, Integer>,
             nativeQuery = true)
     List<Map<String,Float>> getAltimate4(Integer year, List<Integer> month);
 
-    List<movie> findAllByTitleOrderByScoreDesc(String title);
+
+
+    @Query(value="select * " +
+            "from movie m where m.title like concat(?1,'%') " +
+            " ORDER BY m.score DESC ",nativeQuery = true)
+    List<movie> getSimpleMovieLike(String title);
+
 
 
     //ID Score has?

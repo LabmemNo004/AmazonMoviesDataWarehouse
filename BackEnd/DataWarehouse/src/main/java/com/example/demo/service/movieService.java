@@ -230,6 +230,42 @@ public class movieService {
         return result;
     }
 
+    /**
+     * 返回电影的简单情况模糊匹配
+     * @param title
+     * @return
+     */
+    public JSONArray getSimpleMovieLike(String title)
+    {
+        JSONArray result = new JSONArray();
+        List<movie> temp=movierepository.getSimpleMovieLike(title);
+        int i=1;
+        for(movie temp1:temp)
+        {
+            /**
+             * 应该只循环一次。
+             */
+            if(i<=50)
+            {
+                JSONObject studentOne = new JSONObject();
+                studentOne.put("N", i);
+                studentOne.put("title", temp1.getTitle());
+                studentOne.put("productNum", temp1.getProductNum());
+                studentOne.put("directorNum", temp1.getDirectorNum());
+                studentOne.put("actorNum", temp1.getActorNum());
+                studentOne.put("commentNum", temp1.getCommentNum());
+                studentOne.put("score", temp1.getScore());
+                result.add(studentOne);
+            }
+            i++;
+        }
+        JSONObject a=new JSONObject();
+        a.put("总查询数量",i);
+        result.add(a);
+        return result;
+    }
+
+
 
     /**
      * 返回对应产品的情况
@@ -278,6 +314,56 @@ public class movieService {
     }
 
     /**
+     * 返回对应产品的情况
+     * @param title
+     * @return
+     */
+    public JSONArray getDetailProductLike(String title)
+    {
+        JSONArray result = new JSONArray();
+
+        List<movie> temp=movierepository.getDetailProductLike(title);
+        List<Integer> id=new ArrayList<>();
+        for(movie temp1:temp)
+        {
+            id.add(temp1.getMovieID());
+        }
+        List<product> temp1=productrepository.findByMovieIDInOrderByTimeIDDesc(id);
+
+        /**
+         * 这里暂时用结果productID多次查询releasetime,不做链接查询。
+         */
+        int i =1;
+        for(product s:temp1)
+        {
+            if(i<=50)
+            {
+                JSONObject studentOne = new JSONObject();
+                studentOne.put("N", i);
+                studentOne.put("type", s.getType());
+                studentOne.put("format", s.getFormat());
+                studentOne.put("ASIN", s.getProductID());
+                studentOne.put("URL", "http://amazon.com/dp/"+s.getProductID().toString());
+                release_time temp2=releasetimerepository.findByTimeID(s.getTimeID());
+                JSONObject ReleaseTime = new JSONObject();
+                ReleaseTime.put("Year",temp2.getReleaseYear());
+                ReleaseTime.put("Month",temp2.getReleaseMonth());
+                ReleaseTime.put("Day",temp2.getReleaseDay());
+                studentOne.put("ReleaseTime",ReleaseTime);
+                result.add(studentOne);
+            }
+            i++;
+        }
+        JSONObject a=new JSONObject();
+        a.put("总查询数量",i);
+        result.add(a);
+        return result;
+    }
+
+
+
+
+    /**
      *查找电影参演的演员或者导演
      * @param title 电影名
      * @return
@@ -317,6 +403,61 @@ public class movieService {
                     JSONObject alpha=new JSONObject();
                     alpha.put("N",i);
                     alpha.put("director",t);
+                    result.add(alpha);
+                }
+                i++;
+            }
+            j=j+i;
+        }
+        JSONObject a=new JSONObject();
+        a.put("总查询数量",j);
+        result.add(a);
+        return result;
+    }
+
+    /**
+     *查找电影参演的演员或者导演
+     * @param title 电影名
+     * @return
+     */
+    public JSONArray getDirectorOrActorLike(String title,char identity)
+    {
+        /**
+         * 自定义处理特殊排序
+         */
+        int j=0;
+        JSONArray result = new JSONArray();
+        if(identity=='A')
+        {
+            List<Map<String,String>> temp=
+                    relationrepository.getAssociateActorLike(title,'T');
+            int i=1;
+            for(Map<String,String> t : temp){
+                if(i<=50)
+                {
+                    JSONObject alpha=new JSONObject();
+                    alpha.put("N",i);
+                    alpha.put("MovieName",t.get("title"));
+                    alpha.put("actor",t.get("name"));
+                    result.add(alpha);
+                }
+                i++;
+            }
+            j=i;
+        }
+        else if(identity=='D')
+        {
+            List<Map<String,String>> temp=
+                    relationrepository.getAssociateDirectorLike(title,'T');
+            //temp.sort();
+            int i=1;
+            for(Map<String,String> t : temp){
+                if(i<=50)
+                {
+                    JSONObject alpha=new JSONObject();
+                    alpha.put("N",i);
+                    alpha.put("MovieName",t.get("title"));
+                    alpha.put("director",t.get("name"));
                     result.add(alpha);
                 }
                 i++;
