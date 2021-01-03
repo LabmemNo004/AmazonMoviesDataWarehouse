@@ -6,6 +6,7 @@ import com.example.demo.JSONAndConfig.JsonResult;
 import com.example.demo.service.typeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,12 @@ public class scoreController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=typeservice.getPopularMovie(up);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @PostMapping(value="/getMovieByType")
@@ -41,9 +45,12 @@ public class scoreController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=typeservice.getMovieByType(type);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @PostMapping(value="/getMovieByScore")
@@ -54,9 +61,12 @@ public class scoreController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=typeservice.getGreaterscoreMovie(scores);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @PostMapping(value="/getPositiveMovie")
@@ -67,9 +77,12 @@ public class scoreController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=typeservice.getPositivemovie();
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
 

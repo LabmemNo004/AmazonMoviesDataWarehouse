@@ -30,8 +30,6 @@ public class MovieController {
     @Autowired
     private timeService timeservice;
 
-    @Autowired
-    private typeService typeservice;
 
     @PostMapping(value = "/SpecificTimeMovie")
     @ResponseBody   //接受前端json格式的数据
@@ -65,13 +63,17 @@ public class MovieController {
         if(season>0&&season<5)
         {
             JSONArray temp1= movieservice.findBySpecificSeason(year, season);
+            int i=temp1.size()-1;
+            Object counts=temp1.getJSONObject(i).get("总查询数量");
+            temp1.fluentRemove(i);
             myWatch.stop();
             return new JsonResult(temp1,
-                    "成功",myWatch.getLastTaskTimeMillis());
+                    "成功",myWatch.getLastTaskTimeMillis(),counts);
         }
         else if(season<0||season>=5)
         {
             myWatch.stop();
+
             return new JsonResult("返回合理的季度",
                     "失败",myWatch.getLastTaskTimeMillis());
         }
@@ -95,9 +97,12 @@ public class MovieController {
         myWatch.start("task1");
 
         JSONArray temp1= timeservice.findYearMovie(year);
+        int i=temp1.size()-1;
+        Object counts=temp1.getJSONObject(i).get("总查询数量");
+        temp1.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
 
@@ -109,9 +114,12 @@ public class MovieController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp1= timeservice.findAllMovie();
+        int i=temp1.size()-1;
+        Object counts=temp1.getJSONObject(i).get("总查询数量");
+        temp1.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp1,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @PostMapping(value="/SimpleMovie")
@@ -123,9 +131,12 @@ public class MovieController {
         myWatch.start("task1");
         //产品数量、导演数量、演员数量、评论数量、评分
         JSONArray temp=movieservice.getSimpleMovie(title);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @PostMapping(value="/DetailMovie")
@@ -141,9 +152,12 @@ public class MovieController {
         myWatch.start("task1");
 
         JSONArray temp=movieservice.getDetailProduct(title);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @PostMapping(value="/getMovieDirector")
@@ -154,9 +168,12 @@ public class MovieController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=movieservice.getDirectorOrActor(title,'D');
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
     @PostMapping(value="/getMovieActor")
@@ -167,9 +184,12 @@ public class MovieController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=movieservice.getDirectorOrActor(title,'A');
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
         myWatch.stop();
         return new JsonResult(temp,
-                "成功",myWatch.getLastTaskTimeMillis());
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
 }
