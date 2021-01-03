@@ -57,6 +57,41 @@ public class personService {
     }
 
     /**
+     * 根据导演名找到他指导的电影。
+     * @param name
+     * @return
+     */
+    public JSONArray getDirectorWorkLike(String name)
+    {
+        List<Object []> temp=
+                personrepository.getMoviesByDirectorLike(name);
+        int some=temp.size();
+        JSONArray b=new JSONArray();
+
+        long i=0;
+        for(Object [] temp2:temp)
+        {
+            ++i;
+            if(i<=50)
+            {
+                JSONObject a=new JSONObject();
+                String[] tag={"title","score","name"};
+                for(int j=0;j<temp2.length;j++)
+                {
+                    a.put(tag[j],temp2[j]);
+                }
+                a.put("N",i);
+                b.add(a);
+            }
+        }
+        JSONObject temp1=new JSONObject();
+        temp1.put("总查询数量",i);
+        b.add(temp1);
+        return b;
+    }
+
+
+    /**
      * 根据演员名找到他参加的电影。
      * @param name
      * @return
@@ -83,6 +118,40 @@ public class personService {
         temp0.add(b);
         return temp0;
     }
+
+    /**
+     * 根据演员名找到他参加的电影。
+     * @param name
+     * @return
+     */
+    public JSONArray getActorWorkLike(String name)
+    {
+        List<Object []> temp=
+                personrepository.getMoviesByActorLike(name);
+        int some=temp.size();
+        JSONArray temp0=new JSONArray();
+        long i=1;
+        for(Object [] temp2:temp){
+            if(i<=50)
+            {
+                JSONObject temp1=new JSONObject();
+                temp1.put("N",i);
+                String[] tag={"title","score","name"};
+                for(int j=0;j<temp2.length;j++)
+                {
+                    temp1.put(tag[j],temp2[j]);
+                }
+                temp0.add(temp1);
+            }
+            i++;
+        }
+        JSONObject b=new JSONObject();
+        b.put("总查询数量",some);
+        temp0.add(b);
+        return temp0;
+    }
+
+
 
     /**
      * 查找拍摄电影数目大于一定数目的导演

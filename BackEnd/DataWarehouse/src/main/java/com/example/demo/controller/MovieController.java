@@ -139,6 +139,23 @@ public class MovieController {
                 "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
+    @PostMapping(value="/SimpleMovieLike")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "查找具体电影的简要情况", notes = "前端传递电影名称")
+    public JsonResult SimpleMovieLike(@RequestParam("title") String title)
+    {
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
+        //产品数量、导演数量、演员数量、评论数量、评分
+        JSONArray temp=movieservice.getSimpleMovieLike(title);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
+        myWatch.stop();
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
+    }
+
     @PostMapping(value="/DetailMovie")
     @ResponseBody   //接受前端json格式的数据
     @ApiOperation(value = "查找具体电影的具体情况", notes = "前端传递电影名称")
@@ -160,6 +177,29 @@ public class MovieController {
                 "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
+    @PostMapping(value="/DetailMovieLike")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "查找具体电影的具体情况", notes = "前端传递电影名称")
+    public JsonResult DetailMovieLike(@RequestParam("title") String title)
+    {
+        /**
+         * 产品列表：返回电影产品名称、ASIN号、发布时间、
+         *         格式、类型、Amazon网址，并按照发布时间先后排序
+         */
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
+
+        JSONArray temp=movieservice.getDetailProductLike(title);
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
+        myWatch.stop();
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
+    }
+
+
+
     @PostMapping(value="/getMovieDirector")
     @ResponseBody   //接受前端json格式的数据
     @ApiOperation(value = "查找电影的导演", notes = "前端传递电影名称")
@@ -176,6 +216,25 @@ public class MovieController {
                 "成功",myWatch.getLastTaskTimeMillis(),counts);
     }
 
+    @PostMapping(value="/getMovieDirectorLike")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "查找电影的导演", notes = "前端传递电影名称")
+    public JsonResult getMovieDirectorLike(@RequestParam("title") String title)
+    {
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
+        JSONArray temp=movieservice.getDirectorOrActorLike(title,'D');
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
+        myWatch.stop();
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
+    }
+
+
+
+
     @PostMapping(value="/getMovieActor")
     @ResponseBody   //接受前端json格式的数据
     @ApiOperation(value = "查找电影的演员", notes = "前端传递电影名称")
@@ -184,6 +243,23 @@ public class MovieController {
         StopWatch myWatch = new StopWatch("myWatch");
         myWatch.start("task1");
         JSONArray temp=movieservice.getDirectorOrActor(title,'A');
+        int i=temp.size()-1;
+        Object counts=temp.getJSONObject(i).get("总查询数量");
+        temp.fluentRemove(i);
+        myWatch.stop();
+        return new JsonResult(temp,
+                "成功",myWatch.getLastTaskTimeMillis(),counts);
+    }
+
+
+    @PostMapping(value="/getMovieActorLike")
+    @ResponseBody   //接受前端json格式的数据
+    @ApiOperation(value = "查找电影的演员", notes = "前端传递电影名称")
+    public JsonResult getMovieActorLike(@RequestParam("title") String title)
+    {
+        StopWatch myWatch = new StopWatch("myWatch");
+        myWatch.start("task1");
+        JSONArray temp=movieservice.getDirectorOrActorLike(title,'A');
         int i=temp.size()-1;
         Object counts=temp.getJSONObject(i).get("总查询数量");
         temp.fluentRemove(i);
